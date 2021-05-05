@@ -2,12 +2,6 @@
 <!--loader(ng-if="bigLoader")-->
 <!--  /Loading Container -->
 <!-- Navbar -->
-<datalist id="religiones-list">
-  <option>Adventista</option>
-  <option>Católico</option>
-  <option>Pentecostal</option>
-  <option>Testigo de Jehová</option>
-</datalist>
 <div class="navbar hidden-print">
   <div class="navbar-inner">
     <div class="navbar-container">
@@ -22,12 +16,18 @@
       <!-- Account Area and Settings -->
       <div class="navbar-header pull-right">
         <div class="navbar-account">
+
+
           <ul class="account-area">
+
             <!-- Periodo Dropdown-->
-            <li my-drop-down ng-click="togglePeriodos()" is-open="false" ng-class="{ open: seeDropdownPeriodos }" class="dropdown-periodos">
-              <a data-toggle="dropdown" title="Periodos" href=""
-                class="dropdown-toggle link-dropdown-periodos wave in"><i class="icon fa fa-ioxhost"> Per{{
-                  USER.numero_periodo }}</i><span class="badge"></span></a>
+            <li class="dropdown-periodos" uib-dropdown is-open="status.isPeriodoOpen">
+              <a title="Periodos" id="single-button" type="button" class="dropdown-toggle link-dropdown-periodos wave in" uib-dropdown-toggle>
+                <i class="icon fa fa-ioxhost"> Per{{
+                  USER.numero_periodo }}</i>
+                  <span class="badge"></span>
+                </a>
+              </a>
               <ul class="pull-right dropdown-menu dropdown-tasks dropdown-arrow">
                 <li class="dropdown-header bordered-blueberry"><i class="fa fa-ioxhost"></i><span>Periodos</span></li>
                 <li ng-repeat="periodo in periodos"><a href="" ng-click="cambiarPeriodo(periodo)">
@@ -35,20 +35,15 @@
                       <div ng-show="periodo.actual" class="pull-right">En curso</div>
                     </div>
                   </a>
-                  <div ng-if="false"><span class="pull-right">65%</span>
-                    <div class="progress progress-xs">
-                      <div style="width:65%" class="progress-bar"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div style="width:05%" class="progress-bar progress-bar-success"></div>
-                    </div>
-                  </div>
                 </li>
               </ul>
             </li>
             <!--/ Periodo Dropdown-->
-            <li my-drop-down ng-click="toggleOpen()" is-open="false" evitar-cierre="true"><a data-toggle="dropdown"
-                title="Año" href="" class="dropdown-toggle"><i class="icon"> {{ USER.year }}</i></a><!-- Año Dropdown-->
+
+            <!-- Año Dropdown-->
+            <li class="dropdown-toggle" uib-dropdown is-open="status.isYearOpen">
+              <a title="Años" id="single-button" type="button" style="width: 50px;" class="dropdown-toggle link-dropdown-periodos wave in" uib-dropdown-toggle>
+                <i class="icon"> {{ USER.year }}</i></a>
               <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
                 <li ng-repeat="year in years"><a href="" ng-click="cambiarYear(year)">
                     <div class="clearfix">
@@ -65,107 +60,13 @@
               </ul>
               <!--/ Año Dropdown-->
             </li>
-            <li my-drop-down ng-click="toggleOpen()" is-open="false" evitar-cierre="true" ng-if="false"><a
-                data-toggle="dropdown" title="Ayuda" href="" class="dropdown-toggle"><i
-                  class="icon fa fa-warning"></i></a>
-              <!--Notification Dropdown-->
-              <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
-                <li><a href="">
-                    <div class="clearfix">
-                      <div class="notification-icon"><i class="fa fa-phone bg-themeprimary white"></i></div>
-                      <div class="notification-body"><span class="title">Llamada de Miguel</span><span
-                          class="description">01:00 pm</span></div>
-                      <div class="notification-extra"><i class="fa fa-clock-o themeprimary"></i>
-                        <spa class="description">oficina</spa>
-                      </div>
-                    </div>
-                  </a></li>
-                <li><a href="">
-                    <div class="clearfix">
-                      <div class="notification-icon"><i class="fa fa-check bg-darkorange white"></i></div>
-                      <div class="notification-body"><span class="title">Periodo 3 habilitado</span><span
-                          class="description">10 ene - 15 mar</span></div>
-                      <div class="notification-extra"><i class="fa fa-clock-o darkorange"></i></div>
-                    </div>
-                  </a></li>
-                <li><a href="">
-                    <div class="clearfix">
-                      <div class="notification-icon"><i class="fa fa-gift bg-warning white"></i></div>
-                      <div class="notification-body"><span class="title">Cumple Venus Ibica</span><span
-                          class="description">08:30 pm</span></div>
-                      <div class="notification-extra"><i class="fa fa-calendar">Atención</i><i
-                          class="fa fa-clock-o warning"></i><span class="description">En el colegio</span></div>
-                    </div>
-                  </a></li>
-                <li><a href="">
-                    <div class="clearfix">
-                      <div class="notification-icon"><i class="fa fa-glass bg-success white"></i></div>
-                      <div class="notification-body"><span class="title">Fin del periodo 2</span><span
-                          class="description">10:30 pm</span></div>
-                    </div>
-                  </a></li>
-                <li class="dropdown-footer"><span>Hoy, Enero 17</span><span class="pull-right">10°c<i
-                      class="wi wi-cloudy"></i></span></li>
-              </ul>
-              <!--/Notification Dropdown-->
-            </li>
-            <li my-drop-down ng-click="toggleOpen()" is-open="false" ng-if="false"><a data-toggle="dropdown"
-                title="Mensajes" href="" class="wave in dropdown-toggle"><i class="icon fa fa-envelope"></i><span
-                  class="badge">3</span></a>
-              <!--Messages Dropdown-->
-              <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
-                <li><a href=""><img ng-src="images/perfil/default_male.jpg" alt="Armando Maradona"
-                      class="message-avatar">
-                    <div class="message"><span class="message-sender">Armando Maradona</span><span
-                        class="message-time">Hace 2 minutos</span><span class="message-subject">La mano de
-                        Dios</span><span class="message-body">Me parece increíble que me hayan valido ese gol de la mano
-                        de oro, que arbitro tan tonto.</span></div>
-                  </a></li>
-                <li><a href=""><img ng-src="images/perfil/default_female.png" alt="Administrador LAL"
-                      class="message-avatar">
-                    <div class="message"><span class="message-sender">Administrador LAL</span><span
-                        class="message-time">Ayer</span><span class="message-subject">Documento actualizado</span><span
-                        class="message-body">Le adjunto el documento acerca de lo que usted quiera, ya que no sé que
-                        copiar.</span></div>
-                  </a></li>
-                <li><a href=""><img ng-src="images/perfil/default_male.jpg" alt="Nicolás" class="message-avatar">
-                    <div class="message"><span class="message-sender">Nicolás</span><span class="message-time">Viernes,
-                        Enero 2</span><span class="message-subject">Mira esta camara</span><span
-                        class="message-body">Esta cámara es muy bacana!! el problema es que no la han inventado, por lo
-                        que yo estoy copiando barrabasadas :)</span></div>
-                  </a></li>
-              </ul>
-              <!--/Messages Dropdown-->
-            </li>
-            <li my-drop-down ng-click="toggleOpen()" is-open="false" ng-if="false"><a data-toggle="dropdown"
-                title="Tasks" href="" class="dropdown-toggle"><i class="icon fa fa-tasks"></i><span
-                  class="badge"></span></a>
-              <!--Tasks Dropdown-->
-              <ul class="pull-right dropdown-menu dropdown-tasks dropdown-arrow">
-                <li class="dropdown-header bordered-darkorange"><i class="fa fa-tasks">4 Tareas en proceso</i></li>
-                <li><a href="">
-                    <div class="clearfix"><span class="pull-left">Notas del periodo</span><span
-                        class="pull-right">65%</span></div>
-                    <div class="progress progress-xs">
-                      <div style="width:65%" class="progress-bar"></div>
-                    </div>
-                  </a></li>
-                <li><a href="">
-                    <div class="clearfix"><span class="pull-left">Datos personales</span><span
-                        class="pull-right">35%</span></div>
-                    <div class="progress progress-xs">
-                      <div style="width:35%" class="progress-bar progress-bar-success"></div>
-                    </div>
-                  </a></li>
-              </ul>
-              <!--/Tasks Dropdown-->
-            </li><!--  Área de usuario -->
-            <li my-drop-down ng-click="toggleOpen()" is-open="false" evitar-cierre="login-area-noclose"><a
-                data-toggle="dropdown" style="animation-delay: 1s;"
-                class="login-area dropdown-toggle animated bounceIn">
+
+            <li class="dropdown-toggle" uib-dropdown is-open="status.isPerfilOpen">
+              <a title="Años" id="single-button" type="button" 
+                class="login-area dropdown-toggle animated bounceIn" uib-dropdown-toggle>
                 <div title="Ver tu perfil público" class="avatar"><img ng-src="{{ imagenPrincipal }}"></div>
                 <section>
-                  <h2><span class="profile"><span>{{nameToShow()}}</span></span></h2>
+                  <h2><span class="profile"><span style="line-height: 2.4;">{{nameToShow()}}</span></span></h2>
                 </section>
               </a>
               <!--Login Area Dropdown-->
@@ -218,6 +119,8 @@
       <div withpadding-dir class="page-body margin-padding-lados-xs">
         <!-- Main Content ************************************* -->
         <div ui-view="maincontent">
+
+
           <anuncios-dir></anuncios-dir><br><br>
           <!--h3 Entra a los resultados:-->
           <!--button.btn.btn-primary.btn-lg(ui-sref="panel.actividades.votaciones.resultados()") VOTACIONES-->

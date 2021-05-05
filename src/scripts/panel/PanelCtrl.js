@@ -34,6 +34,13 @@
       //$scope.bigLoader = true
       $scope.perfilPath = App.images + 'perfil/';
       $scope.views = App.views;
+
+      $scope.status = {
+        isPeriodoOpen: false,
+        isYearOpen: false,
+        isPerfilOpen: false,
+      };
+
       if (localStorage.cambia_anio) {
         cambia = parseInt(localStorage.cambia_anio);
         modalInstance = $modal.open({

@@ -1,7 +1,0 @@
-div(ng-if="row.entity.year_id==grid.appScope.current_year" style="text-align:right;")
-	a.btn.btn-default.btn-xs.shiny.danger(ng-click="grid.appScope.quitarContrato(row.entity.contrato_id);" uib-tooltip="Contratado año {{grid.appScope.USER.year}}" tooltip-placement="right" href="") 
-		| Dar de baja
-
-div(ng-if="row.entity.year_id!=grid.appScope.current_year" style="text-align:right;")
-	a.btn.btn-success.btn-xs.shiny(ng-click="grid.appScope.contratar(row.entity);" uib-tooltip="Contrato del año {{grid.appScope.USER.year}}" tooltip-placement="right" href="") 
-		| Contratar

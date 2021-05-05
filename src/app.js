@@ -1,17 +1,18 @@
-//require('../node_modules/jquery/dist/core')
+// Jquery para angularjs
 import $ from "jquery"
 
 window.$ = $;
 window.jQuery = $;
 
 import angular from 'angular'
+
 require('../node_modules/angular-animate/angular-animate.js')
 require('../node_modules/angular-aria/angular-aria')
 require('../node_modules/angular-cookies/angular-cookies')
 require('../node_modules/angular-messages/angular-messages')
 require('../node_modules/angular-sanitize/angular-sanitize')
 require('../node_modules/angular-touch/angular-touch')
-require('../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls')
+require('./scripts/ui-bootstrap-tpls')
 require('../node_modules/angular-ui-router/release/angular-ui-router')
 //require('../node_modules/angular-ui-select/select')
 require('../node_modules/angular-loading-bar/build/loading-bar')
