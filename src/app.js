@@ -24,7 +24,10 @@ require('../node_modules/ng-file-upload/dist/ng-file-upload-all')
 require('../node_modules/d3/d3')
 require('../node_modules/nvd3/build/nv.d3')
 require('../node_modules/angular-nvd3/dist/angular-nvd3')
-require('../node_modules/angular-ui-calendar/src/calendar')
+require('../node_modules/moment/dist/moment')
+import moment from 'moment'; 
+window.moment = moment;
+require('./scripts/calendar')
 
 
 
