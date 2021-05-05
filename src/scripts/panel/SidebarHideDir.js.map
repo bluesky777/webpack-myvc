@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "SidebarHideDir.js",
+  "sourceRoot": "",
+  "sources": [
+    "SidebarHideDir.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;;AAAA",
+  "sourcesContent": [
+    ""
+  ]
+}

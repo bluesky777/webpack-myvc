@@ -1,0 +1,23 @@
+.row
+	.col-lg-12.col-xs-12
+		.widget
+			.widget-header
+				span.widget-caption Bitácora
+
+				.widget-buttons
+					a(href="#" data-toggle="collapse")
+						i.fa.fa-minus
+					a(ng-show="false" href="#" data-toggle="dispose")
+						i.fa.fa-times
+			.widget-body
+
+				.row(ng-if="hasRoleOrPerm(['admin'])")
+					.col-md-6
+						ui-select(ng-model="data.profesor" heme="select2" style="width: 100%;" on-select="seleccionaProfe($item, $model)")
+							ui-select-match(placeholder="Profesor" allow-clear="true") {{$select.selected.nombres}} {{$select.selected.apellidos}}
+							ui-select-choices(repeat="profe in contratos | filter: $select.search")
+								div(ng-bind-html="profe.nombres + ' ' + profe.apellidos | highlight: $select.search")
+						.horizontal-space
+				.row
+					.col-lg-12.col-xs-12
+						#grid1.grid(ui-grid="gridOptions" ui-grid-auto-resize ui-grid-resize-columns ui-grid-cellnav)

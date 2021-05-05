@@ -1,0 +1,356 @@
+div(ng-class="{'page-carta-horizontal': config.orientacion=='carta_horizontal', 'page-oficio-horizontal': config.orientacion=='oficio_horizontal','page-vertical': config.orientacion=='vertical', 'salto-pagina': $parent.$last==false }"
+	style="position: relative; overflow: hidden; min-height: 27cm")
+
+	div(style="position: absolute; margin-bottom: 0; margin-left: -10px; border-bottom: none;" ng-show="$parent.config.imagen_fondo" ng-class="{'page-carta-horizontal': config.orientacion=='carta_horizontal', 'page-oficio-horizontal': config.orientacion=='oficio_horizontal','page-vertical': config.orientacion=='vertical' } ")
+		img.img-fondo-boletin(ng-src="{{ perfilPath + $parent.config.imagen_fondo.nombre }}"
+			ng-repeat="cant in $parent.range(config.cant_imagenes) track by $index")
+
+	.row
+		.col-lg-12.col-xs-12
+			.row.encabezado-boletin
+				.col-lg-12.col-xs-12(style="padding: 0;")
+					.row
+						.col-lg-2.col-xs-2
+							img.img-responsive.logo-colegio(ng-src="{{perfilPath + year.logo}}")
+						.col-lg-8.col-xs-8.title-encabezado-boletin(style="padding: 0;")
+							.nombre-colegio
+								| {{year.nombre_colegio + ' - ' + year.abrev_colegio}}
+							.resolucion-colegio
+								span(ng-bind-html="::year.encabezado_certificado" ng-if="::year.encabezado_certificado!=null && year.encabezado_certificado!='' ")
+								span(ng-hide="::year.encabezado_certificado!=null && year.encabezado_certificado!=''") {{::year.resolucion}}
+							.title-descripcion(ng-show="$parent.tipo_boletin_final==1")
+								| Boletin FINAL {{USER.year}}
+							.title-descripcion(ng-show="$parent.tipo_boletin_final==2 || $parent.tipo_boletin_final==3")
+								| Libro FINAL {{USER.year}}
+						.col-lg-2.col-xs-2(style="padding: 0;")
+							img.img-responsive.foto-alumno(ng-src="{{perfilPath + alumno.foto_nombre}}" ng-show="config.mostrar_foto && alumno.foto_id")
+
+					.row.descripcion-encabezado
+						.col-lg-6.col-xs-6
+							.grupo-alumno
+								| Grupo:
+								b.camel   {{grupo.nombre_grupo.toLowerCase()}}
+							.titular-grupo(uib-popover-html="'<img src=\"{{perfilPath + grupo.foto_nombre}}\" style=\"width: 150px; height: 150px;\">'"
+									popover-popup-delay="1000" popover-title="{{grupo.nombres_profesor + ' ' + grupo.apellidos_profesor}}" popover-animation="true"
+									popover-trigger="'mouseenter'" popover-append-to-body="true")
+								| Titular:
+								span.camel   {{grupo.nombres_profesor.toLowerCase() + ' ' + grupo.apellidos_profesor.toLowerCase()}}
+						.col-lg-6.col-xs-6
+							h5.nombre-alumno {{alumno.nombres + ' ' + alumno.apellidos}}
+							.promedio-alumno Puntaje: {{alumno.promedio | setDecimal:1 }}% - Puesto: {{alumno.puesto}}/{{grupo.cantidad_alumnos}}
+
+			.row.body-boletin(style="margin-top: 10px; margin-bottom: 10px; ")
+				.col-lg-12.col-xs-12
+					table.table-bordered.table-bordered2.table-striped.table-striped2(style="margin: 0 auto; width: 100%; font-size: 9pt;")
+
+						tr(style="background-color: #99caed !important; font-weight: bold;")
+							td.text-center No
+							td.txtcentro(style="width: 310px")
+								b Área / Asignatura
+							td.text-center(style="width: 40px")
+								i.fa.fa-clock-o.icon-tardanza
+								span A
+							td.txtcentro(style="width: 45px") IH
+							td.txtcentro(ng-repeat="periodo in year.periodos") Per{{periodo.numero}}
+
+							td.txtcentro
+								// por ahora igual a ver si Francisco me pide cambiarlo
+								span(ng-show="::year.cant_areas_pierde_year > 0")
+									| Escala valorativa
+								span(ng-show="::year.cant_asignatura_pierde_year > 0")
+									| Escala valorativa
+
+							td.txtcentro(style="border-left: 2px solid !important;")
+								// por ahora igual a ver si Francisco me pide cambiarlo
+								span(ng-show="::year.cant_areas_pierde_year > 0")
+									| Escala nacional
+								span(ng-show="::year.cant_asignatura_pierde_year > 0")
+									| Escala nacional
+
+
+						tr(ng-if="::area.asignaturas.length>1" ng-repeat-start="area in ::alumno.areas | orderBy:'orden' track by $index")
+							td.text-center
+								span(ng-show="area.asignaturas.length>1") {{ $index + 1 }}
+							td
+								b {{ ::area.area_nombre }}
+
+							td.text-center(style="font-style: italic; font-size: 8pt;")
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1) && (area.ausencias>0)")
+									| {{ ::area.ausencias }}
+							td.text-center
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1)")
+									| {{ ::area.creditos }}
+							td.text-center
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1)")
+									| {{ ::area.per1 | number:0 }}
+							td.text-center
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1)")
+									| {{ ::area.per2 | number:0 }}
+							td.text-center
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1)")
+									| {{ ::area.per3 | number:0 }}
+							td.text-center
+								span(ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length>1)")
+									| {{ ::area.per4 | number:0 }}
+							td.text-center.italic(ng-class="{'nota-perdida-puestos': area.area_nota<USER.nota_minima_aceptada}" style="font-weight: bold;")
+								| {{ ::area.area_desempenio }}
+							td.text-center.italic(ng-class="{'nota-perdida-puestos': area.area_nota<USER.nota_minima_aceptada}" style="font-weight: bold;")
+								| {{ ::area.area_nota }}
+
+
+
+						tr(ng-repeat-end ng-repeat="asignatura in ::area.asignaturas" ng-if="::(year.cant_areas_pierde_year>0 && area.asignaturas.length==1) || (year.cant_asignatura_pierde_year>0)")
+							//td.text-center {{ asignatura.indice }}
+							td.text-center
+								span(ng-show="area.asignaturas.length==1") {{ $parent.$parent.$index + 1 }}
+							td
+
+								div(style="font-weight: bold;" ng-class="{'asig-padding-left-20': area.asignaturas.length>1 }"
+									uib-popover-template="::views+'informes/infoDocentePop.tpl.html'"
+									popover-popup-delay="500" popover-title="{{::asignatura.nombres_profesor}} {{::asignatura.apellidos_profesor}}" popover-animation="true"
+									popover-trigger="'mouseenter'"  popover-append-to-body="true")
+									| {{ ::asignatura.materia }}
+
+							td.text-center(style="font-style: italic; font-size: 8pt;")
+								span(ng-show="::asignatura.ausencias>0") {{ ::asignatura.ausencias }}
+							td.txtcentro
+								| {{ ::asignatura.creditos }}
+							td.txtcentro(ng-repeat="definitiva in asignatura.definitivas" ng-class="{'nota-perdida-puestos': ((definitiva.DefMateria | number:0 )*1) < (USER.nota_minima_aceptada*1) }"
+								uib-tooltip="Definitiva per {{definitiva.periodo}}" tooltip-append-to-body="true")
+								| {{ definitiva.DefMateria | number:0 }}
+								span.cant-unidades-perdidas(ng-show="definitiva.notas_perdidas > 0 && $parent.year.si_recupera_materia_recup_indicador==0")
+									| ({{definitiva.notas_perdidas}})
+							td.text-center(ng-class="{'nota-perdida-puestos': ((asignatura.promedio | number:0 )*1)<USER.nota_minima_aceptada*1}")
+								| {{ ::asignatura.desempenio }}
+							td.txtcentro.puntero(ng-class="{'nota-perdida-puestos': ((asignatura.promedio | number:0 )*1) < (USER.nota_minima_aceptada*1) }")
+								| {{asignatura.promedio | number:0}}
+								span.cant-unidades-perdidas(ng-show="asignatura.notas_perdidas > 0 && $parent.year.si_recupera_materia_recup_indicador==0")
+									| ({{asignatura.notas_perdidas}})
+
+
+						tr(ng-show="$parent.year.mostrar_nota_comport_boletin")
+							td
+							td
+								i Comportamiento
+									span(style="font-size: 7pt;")  (no computa con lo académico)
+							td
+							td
+							td.txtcentro(ng-repeat="periodo in $parent.year.periodos" ng-class="{'nota-perdida-puestos': (alumno.notas_comportamiento[$index].nota_comportamiento < USER.nota_minima_aceptada && alumno.notas_comportamiento[$index].nota_comportamiento != null) }")
+								i {{ alumno.notas_comportamiento[$index].nota_comportamiento }}
+							td.txtcentro
+								i {{ alumno.nota_comportamiento_year_desempenio }}
+							td.txtcentro
+								i {{alumno.nota_comportamiento_year}}
+
+
+						tr(style="border-top: 2px solid;")
+							td
+							td Total
+
+							td.txtcentro {{ alumno.ausencias }}
+							td.txtcentro {{ alumno.total_creditos }}
+
+							td.txtcentro(ng-repeat="periodo in year.periodos") {{ alumno.asignaturas | promedioPeriodo:periodo.id | decimales:0 }}
+
+							td
+
+							td.txtcentro(style="font-weight: bold; border-left: 2px solid !important;")
+								| {{alumno.promedio | decimales:0 }}
+								span.cant-unidades-perdidas(ng-show="alumno.notas_perdidas > 0 && $parent.year.si_recupera_materia_recup_indicador==0")
+									| ({{alumno.notas_perdidas}})
+
+
+			// Fila que da el diagnóstico de Promovido
+			//
+				.row
+					.col-lg-12.col-xs-12
+						h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && alumno.cant_lost_areas > 0  && alumno.cant_lost_areas < $parent.year.cant_areas_pierde_year")
+							span(ng-switch on="alumno.sexo")
+								span(ng-switch-when="F") La alumna ha sido promovida con áreas pendientes.
+								span(ng-switch-default) El alumno ha sido promovido con áreas pendientes.
+
+
+
+						h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && alumno.cant_lost_areas == 0")
+							span(ng-switch on="alumno.sexo")
+								span(ng-switch-when="F") La alumna ha sido promovida.
+								span(ng-switch-default) El alumno ha sido promovido.
+
+
+						h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && alumno.cant_lost_areas >= $parent.year.cant_areas_pierde_year ")
+							span(ng-switch on="alumno.sexo")
+								span(ng-switch-when="F") La alumna no ha sido promovida.
+								span(ng-switch-default) El alumno no ha sido promovido.
+
+
+
+						h4(style="text-align:center; font-weight: bold!important" ng-show="alumno.cant_lost_asig > 0 && alumno.cant_lost_asig < $parent.year.cant_asignatura_pierde_year && $parent.year.cant_asignatura_pierde_year > 0")
+							span Promoción pendiente.
+
+						h4(style="text-align:center; font-weight: bold!important; margin-top: 0px;" ng-show="$parent.year.cant_asignatura_pierde_year > 0 && (alumno.cant_lost_asig == 0 || alumno.cant_lost_asig >= $parent.year.cant_asignatura_pierde_year)")
+
+							span(ng-show="alumno.cant_lost_asig == 0")
+								span(ng-switch on="alumno.sexo")
+									span(ng-switch-when="F") Promovida.
+									span(ng-switch-default) Promovido.
+
+							span(ng-show="alumno.cant_lost_asig >= $parent.year.cant_asignatura_pierde_year")
+								span(ng-switch on="alumno.sexo")
+									span(ng-switch-when="F") No promovida.
+									span(ng-switch-default) No promovido.
+
+							div(ng-show="$parent.year.abrev_colegio=='LAL' && alumno.cant_lost_asig >= $parent.year.cant_asignatura_pierde_year"
+								style="font-size: 11pt; margin: 20px 30px; font-weight: bold;")
+								| Debido a los estandares del LAL, el estudiante no es promovido, pero se deja en manos de la institución
+								|  a la cual aspira ingresar y de acuerdo a sus políticas en cuanto a las materias que allí
+								|  manejan el ingreso o no al siguiente nivel escolar.
+
+
+					.col-lg-12.col-xs-12(style="margin-bottom: 20px; font-size: 11pt;" ng-if="alumno.recuperaciones.length>0")
+						.row(ng-repeat="recuperacion in alumno.recuperaciones")
+							.col-lg-1.col-xs-1
+							.col-lg-4.col-xs-4
+								| Su calificación en la nivelación de
+							.col-lg-5.col-xs-5(style="padding: 0")
+								b  {{ recuperacion.materia }}
+								span   es
+							.col-lg-2.col-xs-2
+								b  {{ recuperacion.nota }}
+
+
+
+
+					.col-lg-12.col-xs-12(style="text-align: center; margin-top: -10px;")
+						div(style="border-bottom: 1px solid #000; height: 40px; width: 90%; display: inline-block; text-align: left;")
+							| Observaciones:
+						div(style="border-bottom: 1px solid #000; height: 40px; width: 90%; display: inline-block;")
+
+
+			.row
+				.col-lg-12.col-xs-12(ui-tooltip="{{::alumno.promovido}}")
+					h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && (alumno.promovido == 'Promoción pendiente (manual)' || alumno.promovido == 'Promoción pendiente (calculado)') ")
+						span(ng-switch on="alumno.sexo")
+							span(ng-switch-when="F") La alumna ha sido promovida con áreas pendientes.
+							span(ng-switch-default) El alumno ha sido promovido con áreas pendientes.
+
+
+
+					h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && (alumno.promovido == 'Promovido (manual)' || alumno.promovido == 'Promovido (calculado)') ")
+						span(ng-switch on="alumno.sexo")
+							span(ng-switch-when="F") La alumna ha sido promovida.
+							span(ng-switch-default) El alumno ha sido promovido.
+
+
+					h4(style="text-align:center; font-weight: bold!important" ng-if="$parent.year.cant_areas_pierde_year > 0 && (alumno.promovido == 'No promovido (manual)' || alumno.promovido == 'No promovido (calculado)') ")
+						span(ng-switch on="alumno.sexo")
+							span(ng-switch-when="F") La alumna no ha sido promovida.
+							span(ng-switch-default) El alumno no ha sido promovido.
+
+
+
+					h4(style="text-align:center; font-weight: bold!important" ng-show="$parent.year.cant_asignatura_pierde_year > 0 && (alumno.promovido == 'Promoción pendiente (manual)' || alumno.promovido == 'Promoción pendiente (calculado)')")
+						span Promoción pendiente.
+
+					h4(style="text-align:center; font-weight: bold!important; margin-top: 0px;" ng-show="$parent.year.cant_asignatura_pierde_year > 0 ")
+
+						span(ng-show="alumno.promovido == 'Promovido (manual)' || alumno.promovido == 'Promovido (calculado)' ")
+							span(ng-switch on="alumno.sexo")
+								span(ng-switch-when="F") Promovida.
+								span(ng-switch-default) Promovido.
+
+						span(ng-show="alumno.promovido == 'No promovido (manual)' || alumno.promovido == 'No promovido (calculado)'")
+							span(ng-switch on="alumno.sexo")
+								span(ng-switch-when="F") No promovida.
+								span(ng-switch-default) No promovido.
+
+						div(ng-show="$parent.year.abrev_colegio=='LAL' && (alumno.promovido == 'No promovido (manual)' || alumno.promovido == 'No promovido (calculado)')"
+							style="font-size: 11pt; margin: 20px 30px; font-weight: bold;")
+							| Debido a los estandares del LAL, el estudiante no es promovido, pero se deja en manos de la institución
+							|  a la cual aspira ingresar y de acuerdo a sus políticas en cuanto a las materias que allí
+							|  manejan el ingreso o no al siguiente nivel escolar.
+
+
+				.col-lg-12.col-xs-12(style="margin-bottom: 20px; font-size: 11pt;" ng-if="alumno.recuperaciones.length>0")
+					.row(ng-repeat="recuperacion in alumno.recuperaciones")
+						.col-lg-1.col-xs-1
+						.col-lg-4.col-xs-4
+							| Su calificación en la nivelación de
+						.col-lg-5.col-xs-5(style="padding: 0")
+							b  {{ recuperacion.materia }}
+							span   es
+						.col-lg-2.col-xs-2
+							b  {{ recuperacion.nota }}
+
+
+
+
+				.col-lg-12.col-xs-12(style="text-align: center; margin-top: -10px;")
+					div(style="border-bottom: 1px solid #000; height: 40px; width: 90%; display: inline-block; text-align: left;")
+						| Observaciones:
+					div(style="border-bottom: 1px solid #000; height: 40px; width: 90%; display: inline-block;")
+
+
+
+			.row.footer-boletin
+				.col-lg-12.col-xs-12
+					.row
+						.col-lg-6.col-xs-6.rector-firma
+							img(ng-show="config.show_firma_rector" ng-src="{{perfilPath + year.rector_firma}}")
+
+						.col-lg-6.col-xs-6.titular-firma(ng-show="$parent.tipo_boletin_final==1")
+							img(ng-show="config.show_firma_titular" ng-src="{{perfilPath + grupo.firma_titular_nombre}}")
+
+						.col-lg-6.col-xs-6.titular-firma(ng-show="$parent.tipo_boletin_final==2 || $parent.tipo_boletin_final==3")
+							img(ng-show="config.show_firma_titular" ng-src="{{perfilPath + year.secre_firma}}")
+
+					.row
+						.col-lg-6.col-xs-6.nombre-rector-firma
+							| {{year.nombres_rector}} {{year.apellidos_rector}}
+
+						.col-lg-6.col-xs-6.nombre-titular-firma(ng-show="$parent.tipo_boletin_final==2 || $parent.tipo_boletin_final==3")
+							| {{year.nombres_secretario}} {{year.apellidos_secretario}}
+
+						.col-lg-6.col-xs-6.nombre-titular-firma(ng-show="$parent.tipo_boletin_final==1")
+							| {{::grupo.nombres_profesor}} {{::grupo.apellidos_profesor}}
+
+					.row
+						.col-lg-6.col-xs-6(ng-show="::year.sexo_rector=='M'")
+							| Rector
+						.col-lg-6.col-xs-6(ng-show="::year.sexo_rector=='F'")
+							| Rectora
+
+						span(ng-show="$parent.tipo_boletin_final==2 || $parent.tipo_boletin_final==3")
+							.col-lg-6.col-xs-6(ng-show="year.sexo_secretario=='M'")
+								| Secretario
+							.col-lg-6.col-xs-6(ng-show="year.sexo_secretario=='F'")
+								| Secretaria
+
+						.col-lg-6.col-xs-6(ng-show="$parent.tipo_boletin_final==1")
+							| Titular
+
+
+					.row
+						.col-xs-1
+
+						.col-xs-10
+							div(style="border: 1px solid #888; padding: 4px; font-size: 8pt; margin-top: 20px;")
+								div
+									i.fa.fa-clock-o.icon-tardanza
+									span(style="font-weight: bold; font-style: italic;") A:
+									|  Ausencias.
+									span(ng-show="$parent.year.si_recupera_materia_recup_indicador==0")   Los números en paréntesis son indicadores pendientes.
+								div
+									span(style="font-weight: bold; font-style: italic;") IH:
+									|  Intensidad horaria semanal. {{ $parent.year.minu_hora_clase }} minutos de clase. 40 semanas escolares al año.
+								div
+									span(style="font-weight: bold; font-style: italic;") Valoración:
+									|  Según la escala nacional. Calificativo adquirido, siendo {{USER.nota_minima_aceptada}} la nota mínima aprobatoria.
+								div
+									span(ng-repeat="escala in $parent.escalas_val" style="width: 150px; display: inline-block;")
+										span(style="font-weight: bold; font-style: italic;") D. {{escala.desempenio}}:
+										|  de {{escala.porc_inicial}} a {{escala.porc_final}}
+										//span(ng-show="!$first") .9
+
+						.col-xs-1
+
+

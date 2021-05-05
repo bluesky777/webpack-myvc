@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "PermissionsCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "PermissionsCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CACA,CAAC,UADD,CACY,iBADZ,EAC+B;IAAC,QAAD;IAAW,OAAX;IAAoB,QAAA,CAAC,MAAD;IAAS,KAAT,CAAA;aAClD,OAAO,CAAC,GAAR,CAAY,cAAZ;IADkD,CAApB;GAD/B;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n.controller('PermissionsCtrl', ['$scope', '$http', ($scope, $http) ->\n\tconsole.log('Perm control');\n])\n"
+  ]
+}

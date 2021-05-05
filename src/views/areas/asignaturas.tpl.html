@@ -1,0 +1,174 @@
+
+<div ng-show="creando" class="row">
+  <div class="col-xs-12 col-md-12">
+    <form role="form" ng-submit="crear()" class="well with-header with-footer form">
+      <div class="header bordered-yellow">Nueva asignatura</div>
+      <div class="row">
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignatura.materia" style="width: 100%;">
+            <ui-select-match placeholder="Materia" allow-clear="true">{{$select.selected.materia}} - {{$select.selected.alias}}</ui-select-match>
+            <ui-select-choices repeat="materia in materias | filter: {materia: $select.search}">
+              <div ng-bind-html="materia.materia + ' - ' + materia.alias | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignatura.grupo" style="width: 100%;">
+            <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}} - {{$select.selected.abrev}}</ui-select-match>
+            <ui-select-choices repeat="grupo in grupos | filter: {nombre: $select.search}">
+              <div ng-bind-html="grupo.nombre + ' - ' + grupo.abrev | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignatura.profesor" style="width: 100%;">
+            <ui-select-match placeholder="Profesor" allow-clear="true">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+            <ui-select-choices repeat="profe in profesores | filter: $select.search">
+              <div ng-bind-html="profe.nombres + ' ' + profe.apellidos | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="number" min="0" ng-model="currentasignatura.creditos" placeholder="Créditos" style="width: 100%" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="number" min="0" ng-model="currentasignatura.orden" placeholder="Orden" style="width: 100%" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="btn-group">
+          <input type="submit" value="Crear" class="btn btn-primary"><a ng-click="cancelarCrear()" class="btn btn-warning">Ocultar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div ng-show="editando" class="row">
+  <div class="col-xs-12 col-md-12">
+    <form role="form" ng-submit="guardar()" class="well with-header with-footer form">
+      <div class="header bordered-yellow">Editar asignatura</div>
+      <div class="row">
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignaturaEdit.materia" style="width: 100%;">
+            <ui-select-match placeholder="Materia" allow-clear="true">{{$select.selected.materia}} - {{$select.selected.alias}}</ui-select-match>
+            <ui-select-choices repeat="materia in materias | filter: { materia: $select.search }">
+              <div ng-bind-html="materia.materia + ' - ' + materia.alias | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignaturaEdit.grupo" style="width: 100%;">
+            <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}} - {{$select.selected.abrev}}</ui-select-match>
+            <ui-select-choices repeat="grupo in grupos | filter: {nombre: $select.search}">
+              <div ng-bind-html="grupo.nombre + ' - ' + grupo.abrev | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ui-select ng-model="currentasignaturaEdit.profesor" style="width: 100%;">
+            <ui-select-match placeholder="Profesor" allow-clear="true">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+            <ui-select-choices repeat="profe in profesores | filter: $select.search">
+              <div ng-bind-html="profe.nombres + ' ' + profe.apellidos | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="number" min="0" ng-model="currentasignaturaEdit.creditos" placeholder="Créditos" style="width: 100%;" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="number" min="0" ng-model="currentasignaturaEdit.orden" placeholder="Orden" style="width: 100%;" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <input type="submit" value="Guardar cambios" class="btn btn-primary"><a ng-click="cancelarEdit()" class="btn btn-warning">Ocultar</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+      <div class="header bordered-yellow">Asignaturas</div><a ng-click="creando=true" class="btn btn-primary">Crear nueva</a>
+      <div class="horizontal-space"></div>
+      <button type="button" ng-model="show_materias_todas" uib-tooltip="Mostrar todas las materias al entrar el docente (ignorando el horario)" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="cambiarMostrarTodasMaterias(show_materias_todas)" class="btn btn-info">
+         
+        Mostrar todas al docente<i ng-show="show_materias_todas" class="fa fa-check"></i>
+      </button><a ng-click="mostrarTodas()" class="btn btn-default"><i class="fa fa-refresh"></i>Mostrar todas</a>
+      <div class="horizontal-space"></div>
+      <div class="row">
+        <div class="col-sm-6">
+          <ui-select ng-model="currentasignatura.grupo" style="width: 100%;" on-select="seleccionaGrupo($item, $model)">
+            <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}} - {{$select.selected.abrev}}</ui-select-match>
+            <ui-select-choices repeat="grupo in grupos | filter: $select.search">
+              <div ng-bind-html="grupo.nombre + ' - ' + grupo.abrev | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-sm-6">
+          <ui-select ng-model="currentasignatura.profesor" style="width: 100%;" on-select="seleccionaProfe($item, $model)">
+            <ui-select-match placeholder="Profesor" allow-clear="true">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+            <ui-select-choices repeat="profe in profesores | filter: $select.search"><img ng-src="{{perfilPath + profe.foto_nombre}}" style="width:25px; height:25px;"><small ng-bind-html="' ' + profe.nombres + ' ' + profe.apellidos | highlight: $select.search"></small></ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div id="grid1" ui-grid="gridOptions" ui-grid-edit ui-grid-resize-columns ui-grid-cellnav ui-grid-auto-resize style="height: 600px" class="grid"></div>
+      <hr class="wide">
+      <div class="row">
+        <div class="col-md-5">
+          <ui-select ng-model="currentasignatura.grupo" style="width: 100%;" on-select="seleccionaGrupo($item, $model)">
+            <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}} - {{$select.selected.abrev}}</ui-select-match>
+            <ui-select-choices repeat="grupo in grupos | filter: $select.search">
+              <div ng-bind-html="grupo.nombre + ' - ' + grupo.abrev | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-5">
+          <ui-select ng-model="currentasignatura.grupo_destino" style="width: 100%;">
+            <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}} - {{$select.selected.abrev}}</ui-select-match>
+            <ui-select-choices repeat="grupo in grupos | filter: $select.search">
+              <div ng-bind-html="grupo.nombre + ' - ' + grupo.abrev | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-2"><a ng-click="copiarAsignaturas()" ng-disabled="copiando" uib-tooltip="Copiar todas las asignaturas de un grupo a otro" class="btn btn-primary">Copiar asignaturas</a></div>
+      </div>
+      <div style="margin-top: 30px; " class="row">
+        <div class="col-xs-12 col-md-12"><a href="" ng-click="mostrandoPapelera=!mostrandoPapelera" uib-tooltip="Muestra las asignaturas eliminadas de este año">Mostrar papelera</a></div>
+      </div>
+      <div ng-show="mostrandoPapelera" class="row">
+        <div class="col-xs-12 col-md-12">
+          <div ng-show="asignaturas_eliminadas.length == 0" style="border-bottom: 1px solid #ccc;" class="row">
+            <div class="col-xs-12">No hay asignaturas en la papelera</div>
+          </div>
+          <div ng-repeat="asignatura in asignaturas_eliminadas" style="border-bottom: 1px solid #ccc;" class="row">
+            <div class="col-xs-1">
+              <button ng-click="restaurarAsignatura(asignatura)" uib-tooltip="Restaurar asignatura" ng-disabled="asignatura.restaurando" class="btn btn-default btn-sm"><i class="fa fa-undo"></i></button>
+            </div>
+            <div class="col-xs-1">{{asignatura.asignatura_id}}</div>
+            <div class="col-xs-4">{{asignatura.materia}}</div>
+            <div class="col-xs-3">{{asignatura.nombres + ' ' + asignatura.apellidos}}</div>
+            <div class="col-xs-3">{{asignatura.nombre_grupo}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

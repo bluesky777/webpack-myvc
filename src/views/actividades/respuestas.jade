@@ -1,0 +1,62 @@
+.col-lg-12
+	.well.bordered-top.bordered-blueberry
+		h3 {{ actividad.descripcion }}
+
+
+		.row(ng-show="actividad.tipo == 'Cuestionario' || actividad.tipo == 'Examen' " style="margin-top: 10px")
+			.col-lg-12.col-sm-12.table-responsive
+				
+				table.table-bordered.table-bordered2.table-striped.table-striped2
+					thead
+						tr
+							th.text-center(rowspan="2" style="width: 20px; line-height: 3;") No
+							th.text-center(rowspan="2" style="width: 20px; line-height: 3;") Preguntas
+							th.text-center(ng-repeat="grupo in grupos" colspan="{{grupo.alumnos.length}}")
+								|  {{ grupo.nombre }}
+
+						tr
+							th(ng-repeat="alumno in alumnos_unidos")
+								div.text-center.nombresellipsis(uib-popover-template="plantilla" 
+									popover-title="{{alumno.nombres + ' ' + alumno.apellidos}}" 
+									popover-trigger="'mouseenter'" popover-append-to-body="true") {{$index + 1}}
+								
+
+					tbody
+						tr(ng-repeat="pregunta in actividad.preguntas")
+							td {{ $index + 1 }}
+							td
+								span(ng-bind-html="pregunta.enunciado")
+
+							td(ng-repeat="alumno in alumnos_unidos")
+								| {{ alumno.respuestas[$parent.$index].orden }}
+
+
+
+				.row(style="margin-top: 10px")
+					.col-lg-12.col-sm-12
+						table.table-bordered.table-bordered2.table-striped.table-striped2
+							thead
+								tr
+									th.text-center(rowspan="2") No
+									th.text-center(rowspan="2") Preguntas
+									th.text-center(rowspan="2" ng-repeat="i in getOpcionesMaximas() track by $index")
+										|  {{indexChar($index)}}
+
+							tbody
+								tr(ng-repeat="pregunta in actividad.preguntas")
+									td {{ $index + 1 }}
+									td
+										div(ng-bind-html="pregunta.enunciado" style="")
+
+									td(ng-repeat="i in getOpcionesMaximas() track by $index")
+										|    
+
+
+
+
+		.row(style="margin-top: 10px")
+			.col-lg-12.col-sm-12(style="text-align: right;")
+				button.btn.btn-default(ng-click="cancelar()") 
+					i.fa.fa-arrow-left
+					| Actividades
+				button.btn.btn-primary(ng-click="finalizar_actividad()") Finalizar

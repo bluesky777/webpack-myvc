@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "ModalDetallesSesionCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "ModalDetallesSesionCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,yBAFZ,EAEuC;IAAC,QAAD;IAAW,mBAAX;IAAgC,WAAhC;IAA6C,OAA7C;IAAsD,QAAtD;IAAgE,KAAhE;IAAuE,SAAvE;IAAkF,QAAA,CAAC,MAAD;IAAS,cAAT;IAAyB,SAAzB;IAAoC,KAApC;IAA2C,MAA3C;IAAmD,GAAnD;IAAwD,OAAxD,CAAA;AAExH,UAAA,KAAA;IAAA,QAAA;IAAA,KAAA;IAAA,KAAA;IAAA,YAAA;IAAA,OAAA;IAAA;MAAA,MAAM,CAAC,UAAP,GAAoB,GAAG,CAAC,MAAJ,GAAa;MACjC,MAAM,CAAC,SAAP,GAAmB;MAEnB,IAAG,SAAS,CAAC,SAAb;QACC,KAAA,GAAQ,IAAI,IAAJ,CAAS,SAAS,CAAC,UAAnB;QACR,KAAA,GAAQ,IAAI,IAAJ,CAAS,SAAS,CAAC,SAAnB;QAER,QAAA,GAAmB,KAAK,CAAC,OAAN,CAAA,CAAA,GAAkB,KAAK,CAAC,OAAN,CAAA;QAErC,YAAA,GAAe,QAAA,CAAS,CAAC,QAAA,GAAS,IAAV,CAAA,GAAgB,GAAzB;QACf,OAAA,GAAU,QAAA,CAAS,CAAC,QAAA,GAAS,IAAV,CAAA,GAAgB,EAAzB;QACV,OAAA,GAAU,QAAA,CAAS,CAAC,QAAA,GAAS,CAAC,IAAA,GAAK,EAAN,CAAV,CAAA,GAAqB,EAA9B;QACV,KAAA,GAAQ,QAAA,CAAS,CAAC,QAAA,GAAS,CAAC,IAAA,GAAK,EAAL,GAAQ,EAAT,CAAV,CAAA,GAAwB,EAAjC;QAER,KAAA,GAAY,KAAA,GAAQ,EAAZ,GAAsB,GAAA,GAAM,KAA5B,GAAwC;QAChD,OAAA,GAAc,OAAA,GAAU,EAAd,GAAwB,GAAA,GAAM,OAA9B,GAA4C;QACtD,OAAA,GAAc,OAAA,GAAU,EAAd,GAAwB,GAAA,GAAM,OAA9B,GAA4C;QAEtD,MAAM,CAAC,QAAP,GAAkB,KAAA,GAAQ,GAAR,GAAc,OAAd,GAAwB,GAAxB,GAA8B,QAfjD;OAAA,MAAA;QAkBC,MAAM,CAAC,QAAP,GAAkB,mBAlBnB;;MAqBA,MAAM,CAAC,EAAP,GAAY,QAAA,CAAA,CAAA;eACX,cAAc,CAAC,KAAf,CAAA;MADW;aAKZ,MAAM,CAAC,MAAP,GAAgB,QAAA,CAAA,CAAA;eACf,cAAc,CAAC,OAAf,CAAuB,QAAvB;MADe;IA/BwG,CAAlF;GAFvC;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.controller('ModalDetallesSesionCtrl', ['$scope', '$uibModalInstance', 'historial', '$http', 'toastr', 'App', '$filter', ($scope, $modalInstance, historial, $http, toastr, App, $filter)->\n\n\t$scope.imagesPath = App.images + 'perfil/'\n\t$scope.historial = historial\n\n\tif historial.logout_at\n\t\tdesde = new Date(historial.created_at)\n\t\thasta = new Date(historial.logout_at)\n\n\t\tduracion        = (hasta.getTime() - desde.getTime())\n\n\t\tmilliseconds = parseInt((duracion%1000)/100)\n\t\tseconds = parseInt((duracion/1000)%60)\n\t\tminutes = parseInt((duracion/(1000*60))%60)\n\t\thours = parseInt((duracion/(1000*60*60))%24);\n\n\t\thours = if (hours < 10) then (\"0\" + hours) else hours;\n\t\tminutes = if (minutes < 10) then (\"0\" + minutes) else minutes;\n\t\tseconds = if (seconds < 10) then (\"0\" + seconds) else seconds;\n\n\t\t$scope.duracion = hours + \":\" + minutes + \":\" + seconds\n\n\telse\n\t\t$scope.duracion = 'No cerró sesión.'\n\n\n\t$scope.ok = ()->\n\t\t$modalInstance.close()\n\n\n\n\t$scope.cancel = ()->\n\t\t$modalInstance.dismiss('cancel')\n\n])\n\n\n"
+  ]
+}

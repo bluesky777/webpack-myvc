@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "LoginConfig.js",
+  "sourceRoot": "",
+  "sources": [
+    "LoginConfig.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;;AAAA",
+  "sourcesContent": [
+    ""
+  ]
+}

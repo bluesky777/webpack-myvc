@@ -1,0 +1,83 @@
+
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div sv-root="root-areas" sv-on-sort="onSortAreas($item, $partFrom, $partTo, $indexFrom, $indexTo)" sv-part="areas" class="well with-header with-footer">
+      <div class="header bordered-blue">Ordenar</div>
+      <div ng-repeat="area in areas" sv-element style="border-bottom: 1px solid #ccc;" class="row">
+        <div sv-handle class="col-xs-6">{{$index+1}}. {{ ::area.nombre }}</div>
+        <div sv-root="root-materias-$index" sv-part="area.materias" sv-on-sort="onSortMaterias($item, $partFrom, $partTo, $indexFrom, $indexTo, $modeloPadre)" class="col-xs-6">
+          <div ng-repeat="materia in area.materias" sv-element>
+            <div sv-handle>{{$index+1}}. {{ ::materia.materia }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-show="creando" class="row">
+  <div class="col-xs-12 col-md-12">
+    <form role="form" ng-submit="crear()" class="well with-header with-footer form">
+      <div class="header bordered-yellow">Nueva materia</div>
+      <div class="row">
+        <div class="col-md-5">
+          <input type="text" ng-model="currentmateria.materia" placeholder="Nombre materia" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="currentmateria.alias" placeholder="Alias" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-4">
+          <ui-select ng-model="currentmateria.area" theme="select2" style="width: 100%;">
+            <ui-select-match placeholder="Área" allow-clear="true">{{$select.selected.nombre}} ({{$select.selected.alias}})</ui-select-match>
+            <ui-select-choices repeat="area in areas | filter: $select.search">
+              <div ng-bind-html="area.nombre | highlight: $select.search"></div><small ng-bind-html="area.alias | highlight: $select.search"></small>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <input type="submit" value="Crear" class="btn btn-primary"><a ng-click="cancelarCrear()" class="btn btn-warning">Ocultar</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div ng-show="editando" class="row">
+  <div class="col-xs-12 col-md-12">
+    <form role="form" ng-submit="guardar()" class="well with-header with-footer form">
+      <div class="header bordered-yellow">Editar materia</div>
+      <div class="row">
+        <div class="col-md-5">
+          <input type="text" ng-model="currentmateriaEdit.materia" placeholder="Nombre" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="currentmateriaEdit.alias" placeholder="Alias" class="form-control">
+          <div class="horizontal-space"></div>
+        </div>
+        <div class="col-md-4">
+          <ui-select ng-model="currentmateriaEdit.area" heme="select2" style="min-width: 200px;">
+            <ui-select-match placeholder="Área" allow-clear="true">{{$select.selected.nombre}} ({{$select.selected.alias}})</ui-select-match>
+            <ui-select-choices repeat="area in areas | filter: $select.search">
+              <div ng-bind-html="area.nombre | highlight: $select.search"></div><small>{{ area.alias | highlight: $select.search}}</small>
+            </ui-select-choices>
+          </ui-select>
+          <div class="horizontal-space"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <input type="submit" value="Guardar cambios" class="btn btn-primary"><a ng-click="cancelarEdit()" class="btn btn-warning">Ocultar</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="well with-header with-footer">
+      <div class="header bordered-blue">Materias</div><a ng-click="creando=true" class="btn btn-primary">Crear nueva</a>
+      <div id="grid1" ui-grid="gridOptions" ui-grid-edit ui-grid-resize-columns ui-grid-cellnav ui-grid-auto-resize class="grid"></div>
+      <div class="footer">Puedes editar con solo un click.</div>
+    </div>
+  </div>
+</div>

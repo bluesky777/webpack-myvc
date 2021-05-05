@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "materiasPerdidas.js",
+  "sourceRoot": "",
+  "sources": [
+    "materiasPerdidas.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAGA,CAAC,MAHD,CAGQ,sBAHR,EAGgC;IAAE,QAAA,CAAA,CAAA;aACjC,QAAA,CAAC,OAAD;IAAU,IAAV;IAAgB,oBAAhB,CAAA;QAEC,IAAG,IAAH;UAEC,IAAC,CAAA,gBAAD,GAAoB;UAEpB,OAAO,CAAC,OAAR,CAAgB,OAAhB;IAAyB,QAAA,CAAC,MAAD;IAAS,GAAT,CAAA;YAExB,IAAC,CAAA,kBAAD,GAAsB;YAEtB,OAAO,CAAC,OAAR,CAAgB,MAAM,CAAC,UAAvB;IAAmC,QAAA,CAAC,UAAD;IAAa,GAAb,CAAA;cAClC,IAAG,IAAI,CAAC,KAAL,CAAW,UAAU,CAAC,eAAtB,CAAA,GAAyC,oBAA5C;uBACC,IAAC,CAAA,kBAAD,GADD;;YADkC,CAAnC;YAIA,IAAG,IAAC,CAAA,kBAAD,IAAuB,IAA1B;qBACC,IAAC,CAAA,gBAAgB,CAAC,IAAlB,CAAuB,MAAvB,EADD;;UARwB,CAAzB;AAWA,iBAAO,iBAfR;SAAA,MAAA;AAkBC,iBAAO,QAlBR;;MAFD;IADiC,CAAF;GAHhC,CA8BA,CAAC,MA9BD,CA8BQ,kBA9BR,EA8B4B;IAAE,QAAA,CAAA,CAAA;aAC7B,QAAA,CAAC,OAAD;IAAU,IAAV;IAAgB,oBAAhB,CAAA;QAEC,IAAG,IAAH;UAEC,IAAC,CAAA,gBAAD,GAAoB;UAEpB,OAAO,CAAC,OAAR,CAAgB,OAAhB;IAAyB,QAAA,CAAC,MAAD;IAAS,GAAT,CAAA;YAExB,IAAC,CAAA,kBAAD,GAAsB;YAEtB,OAAO,CAAC,OAAR,CAAgB,MAAM,CAAC,WAAvB;IAAoC,QAAA,CAAC,UAAD;IAAa,GAAb,CAAA;cACnC,IAAG,IAAI,CAAC,KAAL,CAAW,UAAU,CAAC,eAAtB,CAAA,GAAyC,oBAA5C;uBACC,IAAC,CAAA,kBAAD,GADD;;YADmC,CAApC;YAIA,IAAG,IAAC,CAAA,kBAAD,IAAuB,IAA1B;qBACC,IAAC,CAAA,gBAAgB,CAAC,IAAlB,CAAuB,MAAvB,EADD;;UARwB,CAAzB;AAWA,iBAAO,iBAfR;SAAA,MAAA;AAkBC,iBAAO,QAlBR;;MAFD;IAD6B,CAAF;GA9B5B;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n\n.filter('materiasPerdidasYear', [ ->\n\t(alumnos, cant, nota_minima_aceptada) ->\n\n\t\tif cant\n\n\t\t\t@alumnos_response = []\n\n\t\t\tangular.forEach alumnos, (alumno, key) ->\n\n\t\t\t\t@cant_asig_perdidas = 0\n\n\t\t\t\tangular.forEach alumno.notas_asig, (asignatura, key) ->\n\t\t\t\t\tif Math.round(asignatura.nota_final_year) < nota_minima_aceptada\n\t\t\t\t\t\t@cant_asig_perdidas++\n\n\t\t\t\tif @cant_asig_perdidas >= cant\n\t\t\t\t\t@alumnos_response.push alumno\n\n\t\t\treturn alumnos_response\n\n\t\telse\n\t\t\treturn alumnos\n\n\n])\n\n\n.filter('materiasPerdidas', [ ->\n\t(alumnos, cant, nota_minima_aceptada) ->\n\n\t\tif cant\n\n\t\t\t@alumnos_response = []\n\n\t\t\tangular.forEach alumnos, (alumno, key) ->\n\n\t\t\t\t@cant_asig_perdidas = 0\n\n\t\t\t\tangular.forEach alumno.asignaturas, (asignatura, key) ->\n\t\t\t\t\tif Math.round(asignatura.nota_asignatura) < nota_minima_aceptada\n\t\t\t\t\t\t@cant_asig_perdidas++\n\n\t\t\t\tif @cant_asig_perdidas >= cant\n\t\t\t\t\t@alumnos_response.push alumno\n\n\t\t\treturn alumnos_response\n\n\t\telse\n\t\t\treturn alumnos\n\n\n])\n"
+  ]
+}

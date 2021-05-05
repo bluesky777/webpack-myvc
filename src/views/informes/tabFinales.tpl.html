@@ -1,0 +1,225 @@
+
+<div class="row">
+  <div style="margin-bottom: 10px;" class="col-lg-12 col-xs-12">
+    <button ng-click="calcularPromovido()" class="btn btn-default shiny">Calcular promovidos</button>
+  </div>
+  <div style="padding-bottom: 10px;" class="col-lg-12 col-xs-12">Tipo de informe
+    <div class="btn-group">
+      <button ng-click="eligirTipoFinal(1)" ng-class="{'active': tipo_boletin_final==1 }" uib-tooltip="Con firma del titular" class="btn btn-default">Boletín final</button>
+      <button ng-click="eligirTipoFinal(2)" ng-class="{'active': tipo_boletin_final==2 }" uib-tooltip="Con firma de secretario(a)" ng-if="::USER.tipo!='Profesor'" class="btn btn-default">Libros finales</button>
+      <button ng-click="eligirTipoFinal(3)" ng-class="{'active': tipo_boletin_final==3 }" uib-tooltip="Calcula todos los periodos" ng-if="::USER.tipo!='Profesor'" class="btn btn-default">Certificado final</button>
+      <button disabled ng-click="eligirTipoFinal(4)" ng-class="{'active': tipo_boletin_final==4 }" uib-tooltip="Calcula hasta el periodo que usted elija" ng-if="::USER.tipo!='Profesor'" class="btn btn-default">Certificado periodos</button>
+    </div>
+  </div>
+</div>
+<hr class="wide"><span ng-show="tipo_boletin_final">
+  <div class="row">
+    <div class="col-lg-12 col-xs-12"><span ng-show="tipo_boletin_final==1 || tipo_boletin_final==2">
+        <div class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label style="margin-right: 9px;">Grupo</label>
+              <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                  <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select><a href="" ng-click="verBoletinesFinalesGrupo()" class="btn btn-default">Grupo completo</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="datos.grupo" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumnos</label>
+              <ui-select ng-model="datos.selected_alumnos" multiple on-select="selectAlumnos($item)" style="width: 100%;">
+                <ui-select-match placeholder="Alumnos del grupo {{datos.grupo.abrev}}" allow-clear="true"><img ng-src="{{perfilPath + $item.foto_nombre}}" style="width:25px; height:25px;">{{$item.nombres}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verBoletinesFinalesAlumnos()" class="btn btn-default">Cargar boletines</a>
+            </div>
+          </div>
+        </div>
+        <div ng-hide="datos.grupo || USER.tipo=='Profesor'" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumno</label>
+              <ui-select ng-model="datos.selected_alumno" on-select="selectAlumno($item)" style="width: 300px;">
+                <ui-select-match placeholder="Elige un alumno" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verBoletinFinalAlumno()" class="btn btn-default">Cargar boletin</a>
+            </div>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Mostrar foto</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.mostrar_foto" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Firma rector</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_firma_rector" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Otra firma</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_firma_titular" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+        </div><br><br></span><span ng-show="tipo_boletin_final==3">
+        <div class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Grupo</label>
+              <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                  <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioGrupo()" class="btn btn-default">Grupo completo</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="datos.grupo" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumnos</label>
+              <ui-select ng-model="datos.selected_alumnos" multiple on-select="selectAlumnos($item)" style="width: 100%;">
+                <ui-select-match placeholder="Alumnos del grupo {{datos.grupo.abrev}}" allow-clear="true"><img ng-src="{{perfilPath + $item.foto_nombre}}" style="width:25px; height:25px;">{{$item.nombres}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.sin_matricular" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.sin_matricular" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioAlumnos()" class="btn btn-default">Cargar boletines</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="!datos.grupo" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumno</label>
+              <ui-select ng-model="datos.selected_alumno" on-select="selectAlumno($item)" style="width: 300px;">
+                <ui-select-match placeholder="Elige un alumno" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.sin_matricular" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.sin_matricular" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioAlumno()" class="btn btn-default">Cargar boletin</a>
+            </div>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Mostrar foto</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.mostrar_foto" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Firma rector</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_firma_rector" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Firma secre</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_firma_secretario" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Datos cabecera</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_datos" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Mostrar cédulas</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_cedulas" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+        </div><br><br></span><span ng-show="tipo_boletin_final==4">
+        <div class="row">
+          <div class="col-lg-7 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label>Calcular hasta el periodo:</label>
+              <input type="number" ng-model="config.periodo_a_calcular" min="1" max="4">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Grupo</label>
+              <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                  <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioGrupo(config.periodo_a_calcular)" class="btn btn-default">Grupo completo</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="datos.grupo" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumnos</label>
+              <ui-select ng-model="datos.selected_alumnos" multiple on-select="selectAlumnos($item)" style="width: 100%;">
+                <ui-select-match placeholder="Alumnos del grupo {{datos.grupo.abrev}}" allow-clear="true"><img ng-src="{{perfilPath + $item.foto_nombre}}" style="width:25px; height:25px;">{{$item.nombres}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.sin_matricular" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.sin_matricular" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioAlumnos(config.periodo_a_calcular)" class="btn btn-default">Cargar informes</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="!datos.grupo" class="row">
+          <div class="col-lg-12 col-xs-12">
+            <div class="form-group">
+              <label>Alumno</label>
+              <ui-select ng-model="datos.selected_alumno" on-select="selectAlumno($item)" style="width: 300px;">
+                <ui-select-match placeholder="Elige un alumno" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+                <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.sin_matricular" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.sin_matricular" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select><a href="" ng-click="verCertificadosEstudioAlumno(config.periodo_a_calcular)" class="btn btn-default">Cargar informe</a>
+            </div>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Mostrar foto</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.mostrar_foto" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Firma rector</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_firma_rector" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+              <label>Mostrar datos</label>
+              <label>
+                <input type="checkbox" ng-click="putConfigCookie()" ng-model="config.show_datos" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+              </label>
+            </div>
+          </div>
+        </div><br><br></span></div>
+  </div></span>

@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "RProfesores.js",
+  "sourceRoot": "",
+  "sources": [
+    "RProfesores.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAGA,CAAC,OAHD,CAGS,gBAHT,EAG2B;IAAC,OAAD;IAAU,IAAV;IAAgB,QAAA,CAAC,KAAD;IAAQ,EAAR,CAAA;AAE1C,UAAA;MAAA,MAAA,GAAS,CAAA;MAET,MAAM,CAAC,UAAP,GAAoB;MAEpB,MAAM,CAAC,SAAP,GAAmB,QAAA,CAAA,CAAA;AAClB,YAAA;QAAA,CAAA,GAAI,EAAE,CAAC,KAAH,CAAA;QAEJ,IAAG,MAAM,CAAC,UAAU,CAAC,MAAlB,GAA2B,CAA9B;UACC,CAAC,CAAC,OAAF,CAAU,MAAM,CAAC,UAAjB,EADD;SAAA,MAAA;UAIC,KAAK,CAAC,GAAN,CAAU,aAAV,CAAwB,CAAC,IAAzB,CAA8B,QAAA,CAAC,CAAD,CAAA;YAC7B,MAAM,CAAC,UAAP,GAAoB,CAAC,CAAC;mBACtB,CAAC,CAAC,OAAF,CAAU,MAAM,CAAC,UAAjB;UAF6B,CAA9B;IAGE,QAAA,CAAC,EAAD,CAAA;YACD,OAAO,CAAC,GAAR,CAAY,6CAAZ;IAA2D,EAA3D;mBACA,CAAC,CAAC,MAAF,CAAS,EAAE,CAAC,IAAZ;UAFC,CAHF,EAJD;;AAYA,eAAO,CAAC,CAAC;MAfS;AAiBnB,aAAO;IAvBmC,CAAhB;GAH3B;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n\n.factory('ProfesoresServ', ['$http', '$q', ($http, $q) ->\n\n\tprofes = {}\n\n\tprofes.profesores = []\n\n\tprofes.contratos = ()->\n\t\td = $q.defer();\n\n\t\tif profes.profesores.length > 0\n\t\t\td.resolve profes.profesores\n\t\telse\n\n\t\t\t$http.get('::contratos').then((r)->\n\t\t\t\tprofes.profesores = r.data\n\t\t\t\td.resolve profes.profesores\n\t\t\t, (r2)->\n\t\t\t\tconsole.log 'No se trajeron los profesores contratados. ', r2\n\t\t\t\td.reject r2.data\n\t\t\t)\n\n\t\treturn d.promise\n\n\treturn profes\n\n])\n"
+  ]
+}

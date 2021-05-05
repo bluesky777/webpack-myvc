@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "MensajesCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "MensajesCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,cAFZ,EAE4B,CAAC,QAAD,EAAW,YAAX,EAAyB,WAAzB,EAAsC,QAAA,CAAC,MAAD,EAAS,UAAT,EAAqB,SAArB,CAAA,EAAA,CAAtC,CAF5B;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module(\"myvcFrontApp\")\n\n.controller('MensajesCtrl', ['$scope', '$rootScope', '$interval', ($scope, $rootScope, $interval)->\n\n\n\treturn\n])\n"
+  ]
+}

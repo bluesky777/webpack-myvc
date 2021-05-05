@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "loader.js",
+  "sourceRoot": "",
+  "sources": [
+    "loader.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,SAFD,CAEW,QAFX,EAEoB;IAAC,QAAA,CAAA,CAAA;aAEpB;QAAA,QAAA,EAAU,GAAV;QACA,WAAA,EAAa,8BADb;QAEA,KAAA,EACC;UAAA,QAAA,EAAU;QAAV,CAHD;QAKA,IAAA,EAAM,QAAA,CAAC,KAAD;IAAQ,KAAR;IAAe,MAAf,CAAA,EAAA;MALN;IAFoB,CAAD;GAFpB;;EAAA;;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.directive('loader',[()-> \n\n\trestrict: 'E'\n\ttemplateUrl: \"==directives/loader.tpl.html\"\n\tscope: \n\t\tcargando: \"=\"\n\n\tlink: (scope, iElem, iAttrs)->\n\t\t# Debo agregar la clase .loading-inactive para que desaparezca el loader de la pantalla.\n\t\t# y eso lo puedo hacer con el ng-if\n\t\t\n\n])\n"
+  ]
+}

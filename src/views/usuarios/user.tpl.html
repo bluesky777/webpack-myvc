@@ -1,0 +1,44 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="profile-container">
+      <div class="profile-header row">
+        <div class="col-lg-6 col-md-6 col-sm-12 text-center"><img ng-src="{{ perfilPath + perfilactual.imagen_nombre }}" alt="Imagen de usuario" class="header-avatar"><img ng-src="{{ perfilPath + perfilactual.foto_nombre }}" alt="Foto oficial" class="header-avatar"></div>
+        <div class="col-lg-6 col-md-6 col-sm-12 profile-info">
+          <div class="header-fullname">{{nameToShow()}}</div><a href="" ng-if="false" class="btn btn-palegreen btn-sm btn-follow"><i class="fa fa-check"></i>Siguiendo</a>
+          <div class="header-information">Pronto más información</div>
+        </div>
+        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+              <div class="stats-value pink">{{perfilactual.abrev_grupo}}</div>
+              <div class="stats-title">{{perfilactual.nombre_grupo}}</div>
+            </div>
+            <div ng-show="perfilactual.tipo=='Al'" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col"><span ng-show="perfilactual.deuda &amp;&amp; perfilactual.deuda==0">
+                <div class="stats-value pink">${{perfilactual.deuda}}</div>
+                <div class="stats-title">Deuda</div></span></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+              <div class="stats-value pink">{{perfilactual.fecha_nac | date:'d-MMM'}}</div>
+              <div class="stats-title">Cumpleaños</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col"><i class="fa fa-map-marker"></i>{{perfilactual.ciudad_nac_nombre}}</div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 inlinestats-col">Email:<strong>  {{perfilactual.email_restore}}</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-body">
+        <div class="col-lg-12">
+          <div class="tabbable">
+            <ul class="nav nav-tabs tabs-flat nav-justified">
+              <li ui-sref-active="active"><a ui-sref="panel.user.resumen">Resumen</a></li>
+              <li ui-sref-active="active" ng-if="canConfig"><a ui-sref="panel.user.configuracion">Configuración</a></li>
+            </ul>
+          </div>
+          <div ui-view="user_detail" class="tab-content tabs-flat"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

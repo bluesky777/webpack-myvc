@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "PanelHeaderCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "PanelHeaderCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CACA,CAAC,UADD,CACY,iBADZ,EAC+B;IAAC,QAAD;IAAW,QAAX;IAAqB,QAArB;IAA+B,cAA/B;IAA+C,YAA/C;IAA6D,YAA7D;IAA2E,QAAA,CAAC,MAAD;IAAS,IAAT;IAAe,MAAf;IAAuB,YAAvB;IAAqC,UAArC;IAAiD,UAAjD,CAAA;MACzG,MAAM,CAAC,MAAP,GAAgB;MAEhB,UAAU,CAAC,MAAX,GAAoB,QAAA,CAAA,CAAA;eACnB,MAAM,CAAC,EAAP,CAAU,MAAM,CAAC,OAAjB;IAA0B,YAA1B;IAAwC;UAAC,MAAA,EAAQ;QAAT,CAAxC;MADmB;MAGpB,MAAM,CAAC,aAAP,GAAuB,QAAA,CAAA,CAAA;eACtB,UAAU,CAAC,SAAX,CAAA;MADsB;IANkF,CAA3E;GAD/B;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module('myvcFrontApp')\n.controller('PanelHeaderCtrl', ['$scope', 'titulo', '$state', '$stateParams', 'Fullscreen', '$rootScope', ($scope, titu, $state, $stateParams, Fullscreen, $rootScope) ->\n\t$scope.titulo = titu\n\n\t$rootScope.reload = ()->\n\t\t$state.go $state.current, $stateParams, {reload: true}\n\n\t$scope.setFullScreen = ()->\n\t\tFullscreen.toggleAll()\n\n\treturn\n])\n"
+  ]
+}

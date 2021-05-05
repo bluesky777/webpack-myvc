@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "ProfesoresConfig.js",
+  "sourceRoot": "",
+  "sources": [
+    "ProfesoresConfig.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CACC,CAAC,MADF,CACS;IAAC,gBAAD;IAAmB,QAAA,CAAC,MAAD,CAAA;MAE1B,MACC,CAAC,KADF,CACQ,wBADR;IAEE;QAAA,GAAA,EAAK,QAAL;QACA,KAAA,EACC;UAAA,eAAA,EACC;YAAA,WAAA,EAAa,qCAAb;YACA,UAAA,EAAY;UADZ,CADD;UAGA,eAAA,EACC;YAAA,WAAA,EAAa,8BAAb;YACA,UAAA,EAAY,iBADZ;YAEA,OAAA,EACC;cAAA,MAAA,EAAQ;gBAAC,QAAA,CAAA,CAAA;yBACR;gBADQ,CAAD;;YAAR;UAHD;QAJD,CAFD;QAYA,IAAA,EACC;UAAA,WAAA,EAAa,OAAb;UACA,OAAA,EAAS,sBADT;UAEA,SAAA,EAAW;QAFX;MAbD,CAFF,CAoBC,CAAC,KApBF,CAoBQ,yBApBR;IAqBE;QAAA,GAAA,EAAK,mBAAL;QACA,KAAA,EACC;UAAA,eAAA,EACC;YAAA,WAAA,EAAa,sCAAb;YACA,UAAA,EAAY;UADZ,CADD;UAGA,eAAA,EACC;YAAA,WAAA,EAAa,8BAAb;YACA,UAAA,EAAY,iBADZ;YAEA,OAAA,EACC;cAAA,MAAA,EAAQ;gBAAC,QAAA,CAAA,CAAA;yBACR;gBADQ,CAAD;;YAAR;UAHD;QAJD,CAFD;QAYA,IAAA,EACC;UAAA,WAAA,EAAa,QAAb;UACA,OAAA,EAAS,sBADT;UAEA,SAAA,EAAW;QAFX;MAbD,CArBF;IAF0B,CAAnB;GADT;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module('myvcFrontApp')\n\t.config ['$stateProvider', ($state) ->\n\n\t\t$state\n\t\t\t.state 'panel.profesores.nuevo',\n\t\t\t\turl: '/nuevo'\n\t\t\t\tviews: \n\t\t\t\t\t'edit_profesor':\n\t\t\t\t\t\ttemplateUrl: \"==profesores/profesoresNew.tpl.html\"\n\t\t\t\t\t\tcontroller: 'ProfesoresNewCtrl'\n\t\t\t\t\t'headerContent':\n\t\t\t\t\t\ttemplateUrl: \"==panel/panelHeader.tpl.html\"\n\t\t\t\t\t\tcontroller: 'PanelHeaderCtrl'\n\t\t\t\t\t\tresolve:\n\t\t\t\t\t\t\ttitulo: [->\n\t\t\t\t\t\t\t\t'Nuevo profesor'\n\t\t\t\t\t\t\t]\n\t\t\t\tdata: \n\t\t\t\t\tdisplayName: 'Nuevo'\n\t\t\t\t\ticon_fa: 'fa fa-graduation-cap'\n\t\t\t\t\tpageTitle: 'Profesor nuevo - MyVc'\n\n\n\t\t\t.state 'panel.profesores.editar',\n\t\t\t\turl: '/editar/:profe_id'\n\t\t\t\tviews: \n\t\t\t\t\t'edit_profesor':\n\t\t\t\t\t\ttemplateUrl: \"==profesores/profesoresEdit.tpl.html\"\n\t\t\t\t\t\tcontroller: 'ProfesoresEditCtrl'\n\t\t\t\t\t'headerContent':\n\t\t\t\t\t\ttemplateUrl: \"==panel/panelHeader.tpl.html\"\n\t\t\t\t\t\tcontroller: 'PanelHeaderCtrl'\n\t\t\t\t\t\tresolve: \n\t\t\t\t\t\t\ttitulo: [->\n\t\t\t\t\t\t\t\t'Editar alumno'\n\t\t\t\t\t\t\t]\n\t\t\t\tdata: \n\t\t\t\t\tdisplayName: 'Editar'\n\t\t\t\t\ticon_fa: 'fa fa-graduation-cap'\n\t\t\t\t\tpageTitle: 'Editar profesor - MyVc'\n\n\n\t\treturn\n\t]\n"
+  ]
+}

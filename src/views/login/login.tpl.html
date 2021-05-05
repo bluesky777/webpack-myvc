@@ -1,0 +1,112 @@
+
+<div class="login-container animated rotateIn">
+  <div style="{{estilo_login}}" class="loginbox bg-white">
+    <div class="loginbox-title">Entrar</div>
+    <div class="loginbox-social">
+      <div class="social-title">Bienvenido a tu Virtual College</div><small><img ng-src="{{logoPath}}" alt=""></small>
+    </div><span ng-show="!mostrando_prematricular">
+      <div class="loginbox-or">
+        <div class="or-line"></div>
+        <div class="or">Datos</div>
+      </div>
+      <form ng-submit="login(credentials)" name="loginForm">
+        <div class="loginbox-textbox">
+          <input type="text" placeholder="Usuario" ng-model="credentials.username" autofocus class="form-control">
+        </div>
+        <div class="loginbox-textbox">
+          <input type="password" placeholder="Contraseña" ng-model="credentials.password" class="form-control">
+        </div>
+        <div class="loginbox-forgot"><a href="" ng-click="olvida_pass = !olvida_pass">¿Olvidaste tu contraseña?</a></div>
+        <div class="loginbox-submit">
+          <input type="submit" value="Entrar" class="btn btn-primary btn-block shiny">
+        </div>
+        <div class="loginbox-signup"><a href="www.micolevirtual.com">MyVC</a></div>
+      </form>
+      <div class="logobox">
+        <div class="loginbox-title"><a ng-click="ir_prematricular()" href="" ng-if="year.prematr_nuevos == 1">Prematrícular {{ year.year + 1 }}</a>
+          <div style="background-color: #fff; padding: 10px" ng-show="olvida_pass" class="loginbox-textbox">
+            <form ng-submit="enviarPass(correo_electronico)">
+              <input type="email" style="margin-bottom: 6px" placeholder="Correo electrónico" ng-model="correo_electronico" class="form-control">
+              <button type="submit" class="btn btn-primary">Restaurar contraseña</button>
+            </form>
+          </div>
+        </div>
+      </div></span><span ng-show="mostrando_prematricular">
+      <div class="loginbox-or">
+        <div class="or-line"></div>
+        <div style="left: calc(50% - 65px); width: auto" class="or">Prematricular nuevo</div>
+      </div>
+      <form ng-submit="login(credentials)" name="loginForm">
+        <div class="loginbox-textbox">
+          <input type="text" placeholder="Nombre" ng-model="credentials.nombres" class="form-control">
+        </div>
+        <div class="loginbox-textbox">
+          <input type="text" placeholder="Apellidos" ng-model="credentials.apellidos" class="form-control">
+        </div>
+        <div class="loginbox-textbox">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="sexo" value="M" ng-model="credentials.sexo" class="inverted"><span class="text">Masculino</span>
+                </label>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="sexo" value="F" ng-model="credentials.sexo" class="inverted"><span class="text">Femenino</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="loginbox-textbox"><span uib-tooltip="Grupo para el año {{year.year+1}}" tooltip-placement="top" tooltip-popup-delay="400">
+            <ui-select ng-model="year.grupo_prematr" theme="select2" style="width: 100%;">
+              <ui-select-match placeholder="Grupo a prematricular" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+              <ui-select-choices repeat="grupo in year.grados_sig | filter: $select.search">
+                <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select></span></div>
+        <div class="loginbox-textbox">
+          <input type="text" placeholder="Celular" uib-tooltip="Celulares" ng-model="credentials.celular" class="form-control">
+        </div>
+        <div class="loginbox-textbox">
+          <input type="text" placeholder="Documento" uib-tooltip="Documento de identidad" ng-model="credentials.documento" class="form-control">
+        </div>
+        <div class="loginbox-submit">
+          <button type="button" ng-click="guardar_prematricula()" class="btn btn-primary btn-block shiny"><i class="fa fa-save"></i>Prematricular</button>
+        </div>
+      </form>
+      <div class="logobox">
+        <div class="loginbox-title"><a ng-click="ir_prematricular()" href="" ng-if="year.prematr_nuevos == 1">Volver</a></div>
+      </div></span>
+  </div>
+</div>
+<div ng-show="publicaciones.length &gt; 0" style="display: flex; justify-content: center; align-items: center; " ng-class="{'mg-top-120': olvida_pass}" class="row">
+  <div class="col-sm-8 col-xs-12">
+    <div ng-repeat="publicacion_actual in publicaciones" class="widget">
+      <div class="widget-body">
+        <div class="widget-main no-padding">
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- Publicaciones actuales-->
+              <div style="margin-right: 8px; margin-top: 10px;" class="publicacion-actual">
+                <div>
+                  <div ng-click="verPublicacionDetalle(publicacion_actual)" class="sin-focus"><img ng-if="publicacion_actual.foto_autor" ng-src="{{ perfilPath + publicacion_actual.foto_autor }}" style="width: 50px;"><span style="font-weght: bold">{{ publicacion_actual.nombre_autor }}</span><span style="font-style: italic; color: #999; float: right;"> {{ publicacion_actual.created_at }}</span>
+                    <div ng-bind-html="publicacion_actual.contenido" ng-if="publicacion_actual.imagen_nombre &amp;&amp; publicacion_actual.contenido.length&gt;0" class="texto-publicacion-acompa"></div>
+                    <div ng-if="!publicacion_actual.imagen_nombre" class="texto-publicacion-solo">
+                      <div ng-bind-html="publicacion_actual.contenido"></div>
+                    </div>
+                  </div>
+                  <div ng-if="publicacion_actual.imagen_nombre" style="overflow: auto; max-height: 500px;"><img ng-src="{{ perfilPath + publicacion_actual.imagen_nombre }}" style="width: 100%;" ng-click="abrirImagenBlank(perfilPath + publicacion_actual.imagen_nombre);"></div>
+                  <div style="margin-top: 10px;" ng-click="verPublicacionDetalle(publicacion_actual)"><a href="">{{ publicacion_actual.comentarios }} comentarios.</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

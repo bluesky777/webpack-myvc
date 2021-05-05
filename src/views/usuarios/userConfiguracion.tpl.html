@@ -1,0 +1,257 @@
+
+<uib-accordion close-others="true">
+  <div uib-accordion-group heading="Información personal" is-open="true" class="panel-default">
+    <form ng-submit="solicitarCambios()">
+      <div ng-if="perfilactual.tipo=='Al'">
+        <div class="widget">
+          <div class="widget-header bordered-bottom bordered-pink"><span class="widget-caption">Básica</span></div>
+          <div class="widget-body">
+            <div class="row">
+              <div class="col-lg-2 col-sm-12"><img style="width: 200px" ng-src="{{perfilPath + perfilactual.foto_nombre}}"></div>
+              <div class="col-lg-10 col-sm-12">
+                <div class="row">
+                  <div class="form-group col-lg-4 col-sm-6">
+                    <label for="perfilactual-nombres">Nombres</label>
+                    <input id="perfilactual-nombres" type="text" ng-model="perfilactual.nombres" placeholder="Nombres" class="form-control">
+                  </div>
+                  <div class="form-group col-lg-4 col-sm-6">
+                    <label for="perfilactual-apellidos">Apellidos</label>
+                    <input id="perfilactual-apellidos" type="text" ng-model="perfilactual.apellidos" placeholder="Apellidos" class="form-control">
+                  </div>
+                  <div style="margin-bottom: 5px;" class="form-group col-lg-4 col-sm-6 col-xs-12">
+                    <label>Sexo</label>
+                    <div class="row">
+                      <div class="col-lg-6 col-sm-4 col-xs-12">
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="sexo" value="M" ng-model="perfilactual.sexo" class="inverted"><span class="text">Masculino</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-sm-4 col-xs-12">
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="sexo" value="F" ng-model="perfilactual.sexo" class="inverted"><span class="text">Femenino</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-4 col-sm-6">
+                    <label for="perfilactual-no-matr">Número Matrícula</label>
+                    <input id="perfilactual-no-matr" type="text" ng-model="perfilactual.no_matricula" placeholder="Número de matrícula" disabled="disabled" class="form-control">
+                  </div>
+                  <div style="margin-bottom: 12px;" class="form-group col-lg-4 col-sm-6 col-xs-12">
+                    <label for="perfilactual-fecha-nac">Fecha de nacimiento</label>
+                    <div class="controls">
+                      <div class="input-group"><span ng-click="data.isOpen = true" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="perfilactual-fecha-nac" type="text" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="perfilactual.fecha_nac" is-open="data.isOpen" ng-click="data.isOpen = true" max-date="'2020-12-12'" datepicker-options="dateOptions" close-text="Aceptar" current-text="Hoy" clear-text="Borrar" placeholder="Fecha nacimiento" class="form-control active">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-header bordered-bottom bordered-pink"><span class="widget-caption">Nacimiento</span></div>
+          <div class="widget-body">
+            <div class="row">
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Pais</label>
+                <ui-select ng-model="perfilactual.pais_nac" on-select="paisNacSelect($item, $model)" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Pais nacimiento" allow-clear="true">{{$select.selected.pais}} ({{$select.selected.abrev}})</ui-select-match>
+                  <ui-select-choices repeat="pais in paises | filter: $select.search">
+                    <div ng-bind-html="pais.pais | highlight: $select.search"></div><small>{{ pais.departamento | highlight: $select.search}}</small>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Departamento</label>
+                <ui-select ng-model="perfilactual.departamento_nac" on-select="departNacSelect($item, $model)" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Departamento nacimiento" allow-clear="true">{{$select.selected.departamento}}</ui-select-match>
+                  <ui-select-choices repeat="departamento in departamentosNac | filter: $select.search">
+                    <div ng-bind-html="departamento.departamento | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Ciudad</label>
+                <ui-select ng-model="perfilactual.ciudad_nac" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Ciudad nacimiento" allow-clear="true">{{$select.selected.ciudad}}</ui-select-match>
+                  <ui-select-choices repeat="ciudad in ciudadesNac | filter: $select.search">
+                    <div ng-bind-html="ciudad.ciudad | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-header bordered-bottom bordered-pink"><span class="widget-caption">Documento</span></div>
+          <div class="widget-body">
+            <div class="row">
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Tipo</label>
+                <ui-select ng-model="perfilactual.tipo_doc" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Tipo de documento" allow-clear="true">{{$select.selected.tipo}}{{ ' ('+$select.selected.abrev+')'}}</ui-select-match>
+                  <ui-select-choices repeat="tipo_doc in tipos_doc">
+                    <div ng-bind-html="tipo_doc.tipo | highlight: $select.search"></div><small>{{ tipo_doc.abrev}}</small>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label for="perfilactual-documento">Número documento</label>
+                <input id="perfilactual-documento" type="text" ng-model="perfilactual.documento" placeholder="Documento" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Pais</label>
+                <ui-select ng-model="perfilactual.pais_doc" on-select="paisDocSelecionado($item, $model)" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Pais documento" allow-clear="true">{{$select.selected.pais}} ({{$select.selected.abrev}})</ui-select-match>
+                  <ui-select-choices repeat="pais in paises | filter: $select.search">
+                    <div ng-bind-html="pais.pais | highlight: $select.search"></div><small>{{ pais.departamento | highlight: $select.search}}</small>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Departamento</label>
+                <ui-select ng-model="perfilactual.departamento_doc" on-select="departDocSeleccionado($item, $model)" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Departamento documento" allow-clear="true">{{$select.selected.departamento}}</ui-select-match>
+                  <ui-select-choices repeat="departamento in departamentos | filter: $select.search">
+                    <div ng-bind-html="departamento.departamento | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-4 col-sm-6 col-xs-12">
+                <label>Ciudad</label>
+                <ui-select ng-model="perfilactual.ciudad_doc" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Ciudad documento" allow-clear="true">{{$select.selected.ciudad}}</ui-select-match>
+                  <ui-select-choices repeat="ciudad in ciudades | filter: $select.search">
+                    <div ng-bind-html="ciudad.ciudad | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-header bordered-bottom bordered-pink"><span class="widget-caption">Datos extra</span></div>
+          <div class="widget-body">
+            <div class="row">
+              <div class="form-group col-lg-2 col-sm-6 col-xs-12">
+                <label for="perfilactual-tipo-sangre">Tipo de sangre</label>
+                <ui-select ng-model="perfilactual.tipo_sangre" style="width: 100%;" disabled="disabled">
+                  <ui-select-match placeholder="Tipo de sangre" allow-clear="true">{{$select.selected.sangre}}</ui-select-match>
+                  <ui-select-choices repeat="sangre in sangres | filter: $select.search">
+                    <div ng-bind-html="sangre.sangre | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-eps">EPS</label>
+                <input id="perfilactual-eps" type="text" ng-model="perfilactual.eps" placeholder="EPS" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-telefono">Teléfono</label>
+                <input id="perfilactual-telefono" type="text" ng-model="perfilactual.telefono" placeholder="Teléfono" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-celular">Celular</label>
+                <input id="perfilactual-celular" type="text" ng-model="perfilactual.celular" placeholder="Celular" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-direccion">Direccion</label>
+                <input id="perfilactual-direccion" type="text" ng-model="perfilactual.direccion" placeholder="Direccion" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-barrio">Barrio</label>
+                <input id="perfilactual-barrio" type="text" ng-model="perfilactual.barrio" placeholder="Barrio" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-estrato">Estrato</label>
+                <div class="spinner spinner-horizontal">
+                  <input id="perfilactual-estrato" type="text" minlength="0" maxlength="10" ng-model="perfilactual.estrato" disabled="disabled" class="spinner-input form-control">
+                  <div class="spinner-buttons btn-group">
+                    <button type="button" ng-click="restarEstrato()" class="btn spinner-down blueberry"><i class="fa fa-minus"></i></button>
+                    <button type="button" ng-click="sumarEstrato()" class="btn spinner-up purple"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-religion">Religión</label>
+                <input id="perfilactual-religion" type="text" ng-model="perfilactual.religion" placeholder="Religión" disabled="disabled" class="form-control">
+              </div>
+              <div class="form-group col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-email">E-mail</label>
+                <input id="perfilactual-email" type="text" ng-model="perfilactual.email" placeholder="E-mail" disabled="disabled" class="form-control">
+              </div>
+              <div class="col-lg-3 col-sm-6 col-xs-12">
+                <label for="perfilactual-facebook">Facebook</label>
+                <input id="perfilactual-facebook" type="text" ng-model="perfilactual.facebook" placeholder="Facebook" disabled="disabled" class="form-control">
+              </div>
+              <div class="col-lg-3 col-sm-6 col-xs-12">
+                <label>Está a paz y salvo</label>
+              </div>
+              <div class="col-lg-3 col-sm-6 col-xs-12"><span>Deuda</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <center>
+        <button type="submit" ng-if="canConfig" class="btn btn-primary btn-lg">Solicitar cambios</button>
+      </center><br><br>
+    </form>
+  </div>
+  <div uib-accordion-group heading="Datos de usuario" ng-if="canConfig" class="panel-default">
+    <form role="form">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label>Nombre de usuario ({{perfilactual.username}})</label><span class="input-icon icon-right">
+              <input ng-model="newusername" type="text" placeholder="Nombre de usuario" ng-init="newusername==perfilactual.username" typeahead="nombresusu as nombresusu.username for nombresusu in nombresdeusuario | filter:{username:$viewValue} | limitTo:8" class="form-control"><i class="fa fa-user azure"></i></span><br><br>
+            <button ng-click="comprobarusername(newusername)" class="btn btn-warning"><span ng-hide="comprobando">Comprobar</span><span ng-show="comprobando">Comprobando<i class="fa fa-spinner fa-spin"></i></span></button>
+            <div ng-show="mostrarErrorUsername" class="alert alert-warning fade in">
+              <div class="fa-fw fa fa-warning"></div><span ng-show="newusername!=perfilactual.username">Usuario no disponible.</span><span ng-show="newusername==perfilactual.username">Ya es tu nombre de usuario actual.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" ng-click="CambiarUsername(newusername)" ng-class="{disabled:mostrarErrorUsername || newusername=='' || newusername==perfilactual.username || canSaveUsername==false }" class="btn btn-primary">Guardar usuario</button>
+    </form>
+    <hr class="wide">
+    <form role="form" style="margin-top: 30px">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label>Correo electrónico para cuando pierdas la contraseña</label><span class="input-icon icon-right">
+              <input ng-model="perfilactual.email_restore" type="email" placeholder="Escriba Email" class="form-control"><i class="fa fa-user azure"></i></span>
+          </div>
+        </div>
+      </div>
+      <button type="button" ng-click="guardarEmailRestore(perfilactual.email_restore)" ng-disabled="guardandoEmail" class="btn btn-primary">Guardar correo</button>
+    </form>
+  </div>
+  <div uib-accordion-group heading="Cambiar contraseña" ng-if="canConfig" is-open="status.passCambiado" class="panel-default">
+    <form role="form" ng-submit="CambiarPass(newpass, newpassverif, passantiguo)">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="form-group">
+            <label>Contraseña antigua</label><span class="input-icon icon-right">
+              <input type="password" placeholder="Contraseña antigua" ng-model="passantiguo" class="form-control"><i class="fa fa-user azure"></i></span>
+          </div>
+          <div class="form-group">
+            <label>Contraseña nueva</label><span class="input-icon icon-right">
+              <input type="password" required placeholder="Contraseña nueva" ng-model="newpass" class="form-control"><i class="fa fa-user azure"></i></span>
+            <div ng-show="mostrarErrorPassword" class="alert alert-warning fade in">La contraseña debe ser repetida exactamente</div><br><br>
+            <label>Repita la contraseña nueva</label><span class="input-icon icon-right">
+              <input type="password" placeholder="Verificar contraseña nueva" ng-model="newpassverif" class="form-control"><i class="fa fa-user azure"></i></span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" ng-disabled="cambiandoPass" class="btn btn-primary">Cambiar contraseña</button>
+    </form>
+  </div>
+</uib-accordion>

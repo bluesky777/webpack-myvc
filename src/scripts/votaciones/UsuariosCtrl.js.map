@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "UsuariosCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "UsuariosCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,cAFZ,EAE4B;IAAC,QAAD;IAAW,YAAX;IAAyB,WAAzB;IAAsC,QAAA,CAAC,MAAD;IAAS,UAAT;IAAqB,SAArB,CAAA;MAEjE,OAAO,CAAC,GAAR,CAAY,sBAAZ;IAFiE,CAAtC;GAF5B;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module(\"myvcFrontApp\")\n\n.controller('UsuariosCtrl', ['$scope', '$rootScope', '$interval', ($scope, $rootScope, $interval)->\n\n\tconsole.log \"Cargando usuarios...\"\n\n\treturn\n])\n"
+  ]
+}

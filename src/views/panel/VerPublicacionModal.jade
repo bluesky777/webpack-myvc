@@ -1,0 +1,58 @@
+.modal-header(style="background-color: #fff; border-bottom: 0px; padding-top: 0px;")
+	button.close(type="button" ng-click="ok()" aria-label="Close" style="padding: 8px;")
+		i.fa.fa-times
+
+.modal-body(style="padding-top: 0px; margin-top: 15px;")
+
+	.row
+		.col-xs-12.col-sm-8(style="border-right: 1px solid #ccc;")
+
+			img(ng-if="publicacion_actual.foto_autor" ng-src="{{ perfilPath + publicacion_actual.foto_autor }}" style="width: 50px;")
+			span(style="font-size: 16pt; font-weght: bold;") {{ publicacion_actual.nombre_autor }}
+			span(style="font-style: italic; color: #999; float: right;")  {{ publicacion_actual.created_at }}
+
+			hr(style="margin: 10px;")
+
+			.texto-publicacion-acompa(ng-bind-html="publicacion_actual.contenido" ng-if="publicacion_actual.imagen_nombre && publicacion_actual.contenido.length>0")
+			.texto-publicacion-solo.del-modal(ng-if="!publicacion_actual.imagen_nombre")
+				div(ng-bind-html="publicacion_actual.contenido")
+
+
+			.del-modal(ng-if="publicacion_actual.imagen_nombre" style="overflow: auto;")
+				img(ng-src="{{ perfilPath + publicacion_actual.imagen_nombre }}" style="width: 100%;"
+					ng-click="abrirImagenBlank(perfilPath + publicacion_actual.imagen_nombre);")
+
+
+		.col-xs-12.col-sm-4
+
+			h4(style="font-weight: 500 !important;") Comentarios ({{ publicacion_actual.comentarios.length }} comentarios).
+
+			div(style="height: 75vh; overflow: auto;")
+				.comentarios-publi(ng-repeat="comentario in publicacion_actual.comentarios"
+					style="white-space: nowrap; margin-bottom: 4px;")
+
+					img(ng-if="comentario.foto_autor" ng-src="{{ perfilPath + comentario.foto_autor }}" style="width: 40px; margin-top: -30px;")
+					img(ng-if="!comentario.foto_autor" ng-src="{{ perfilPath + 'default_female.png' }}" style="width: 40px; margin-top: -30px;")
+
+					.texto-comentario-publicacion(uib-tooltip="{{ comentario.created_at }}" tooltip-popup-delay="1000")
+
+						div(style="color: #337ab7; white-space: normal;") {{ comentario.nombre_autor }}:
+						div(style="white-space: normal;" ng-show="!comentario.eliminado")  {{ comentario.comentario }}
+
+						button.close(type="button" ng-show="!comentario.eliminado" ng-click="eliminarComentario(comentario)" aria-label="Close"
+							ng-if="USER.is_superuser || USER.persona_id==comentario.persona_id" style="float: right; font-size: 16pt; margin-top: -18px;")
+							i.fa.fa-times
+
+
+			div(style="margin-top: 15px")
+				form(ng-submit="agregarComentario(new_comentario)")
+					img(ng-src="{{ perfilPath + USER.imagen_nombre }}" style="height: 34px; float: left; background-color: #8fe6f8;")
+					.input-group
+						input.form-control(type="text" ng-model="new_comentario"
+							placeholder="Escribe comentario..." style="border-radius: 0 !important; padding: 6px;")
+						span.input-group-btn
+							button.btn.btn-default.shiny(type="submit" ng-disabled="guardando_coment")
+								i.fa.fa-envelope-o
+
+
+

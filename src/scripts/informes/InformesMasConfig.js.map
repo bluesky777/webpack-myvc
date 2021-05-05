@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "InformesMasConfig.js",
+  "sourceRoot": "",
+  "sources": [
+    "InformesMasConfig.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CACA,CAAC,MADD,CACQ;IAAC,gBAAD;IAAmB,KAAnB;IAA0B,YAA1B;IAAwC,aAAxC;IAAuD,QAAA,CAAC,MAAD;IAAS,GAAT;IAAc,UAAd;IAA0B,WAA1B,CAAA;aAE9D,MAIC,CAAC,KAJF,CAIQ,mCAJR;IAKE;QAAA,GAAA,EAAK,qBAAL;QACA,KAAA,EACC;UAAA,gBAAA,EACC;YAAA,WAAA,EAAa,wCAAb;YACA,UAAA,EAAY,uBADZ;YAEA,OAAA,EACC;cAAA,UAAA,EAAY;gBAAC,OAAD;gBAAU,cAAV;gBAA0B,QAAA,CAAC,KAAD,CAAA;yBACrC,KAAK,CAAC,GAAN,CAAU,sBAAV;gBADqC,CAA1B;;YAAZ;UAHD;QADD,CAFD;QASA,IAAA,EACC;UAAA,WAAA,EAAa,oBAAb;UACA,OAAA,EAAS,aADT;UAEA,SAAA,EAAW;QAFX;MAVD,CALF,CAqBC,CAAC,KArBF,CAqBQ,4CArBR;IAsBE;QAAA,GAAA,EAAK,8BAAL;QACA,KAAA,EACC;UAAA,gBAAA,EACC;YAAA,WAAA,EAAa,8CAAb;YACA,UAAA,EAAY,6BADZ;YAEA,OAAA,EACC;cAAA,MAAA,EAAQ;gBAAC,OAAD;gBAAU,cAAV;gBAA0B,QAAA,CAAC,KAAD,CAAA;yBACjC,KAAK,CAAC,GAAN,CAAU,+BAAV;gBADiC,CAA1B;;YAAR;UAHD;QADD,CAFD;QASA,IAAA,EACC;UAAA,WAAA,EAAa,wBAAb;UACA,OAAA,EAAS,aADT;UAEA,SAAA,EAAW;QAFX;MAVD,CAtBF;IAF8D,CAAvD;GADR;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n.config(['$stateProvider', 'App', 'USER_ROLES', 'PERMISSIONS', ($state, App, USER_ROLES, PERMISSIONS) ->\n\n\t$state\n\n\n\n\t\t.state 'panel.informes.listado_profesores',\n\t\t\turl: '/listado_profesores'\n\t\t\tviews:\n\t\t\t\t'report_content':\n\t\t\t\t\ttemplateUrl: \"==informes2/listadoProfesores.tpl.html\"\n\t\t\t\t\tcontroller: 'ListadoProfesoresCtrl'\n\t\t\t\t\tresolve:\n\t\t\t\t\t\tprofesores: ['$http', '$stateParams', ($http)->\n\t\t\t\t\t\t\t$http.put('::profesores/listado')\n\t\t\t\t\t\t]\n\t\t\tdata:\n\t\t\t\tdisplayName: 'Listado profesores'\n\t\t\t\ticon_fa: 'fa fa-print'\n\t\t\t\tpageTitle: 'Listado profesores - MyVc'\n\n\n\n\t\t.state 'panel.informes.ver_cant_alumnos_por_grupos',\n\t\t\turl: '/ver_cant_alumnos_por_grupos'\n\t\t\tviews:\n\t\t\t\t'report_content':\n\t\t\t\t\ttemplateUrl: \"==informes2/verCantAlumnosPorGrupos.tpl.html\"\n\t\t\t\t\tcontroller: 'VerCantAlumnosPorGruposCtrl'\n\t\t\t\t\tresolve:\n\t\t\t\t\t\tgrupos: ['$http', '$stateParams', ($http)->\n\t\t\t\t\t\t\t$http.put('::grupos/con-cantidad-alumnos')\n\t\t\t\t\t\t]\n\t\t\tdata:\n\t\t\t\tdisplayName: 'Ver alumnos por grupos'\n\t\t\t\ticon_fa: 'fa fa-print'\n\t\t\t\tpageTitle: 'Ver alumnos por grupos - MyVc'\n\n\n\n\n\n])\n\n\n\n\n\n"
+  ]
+}

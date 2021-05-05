@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "PuestosGrupoYearCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "PuestosGrupoYearCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,sBAFZ,EAEoC;IAAC,QAAD;IAAW,eAAX;IAA4B,SAA5B;IAAuC,UAAvC;IAAmD,QAAnD;IAA6D,QAAA,CAAC,MAAD;IAAS,aAAT;IAAwB,OAAxB;IAAiC,QAAjC;IAA2C,MAA3C,CAAA;AAChG,UAAA,MAAA;IAAA,IAAA;IAAA,CAAA;IAAA,CAAA;IAAA,GAAA;IAAA,IAAA;IAAA,aAAA;IAAA,GAAA;IAAA;MAAA,aAAA,GAAgB,aAAa,CAAC;MAE9B,MAAM,CAAC,SAAP,GAAmB,IAAI,IAAJ,CAAA;MAGnB,MAAM,CAAC,KAAP,GAAe,aAAa,CAAC;MAC7B,MAAM,CAAC,IAAP,GAAc,aAAa,CAAC;MAC5B,MAAM,CAAC,OAAP,GAAiB,aAAa,CAAC;MAG/B,IAAG,QAAA,CAAS,MAAM,CAAC,MAAM,CAAC,kBAAvB,CAAA,KAA8C,CAAjD;AAEC;QAAA,KAAA,qCAAA;;AACC;UAAA,KAAA,wCAAA;;YACC,aAAA,GAAuB,MAAM,CAAC,IAAI,CAAC,oBAAZ,GAAmC,CAAnC,GAAuC,IAAI,CAAC,eAAL,GAAqB;YACnF,IAAI,CAAC,aAAL,GAAyB,aAAA,IAAiB,CAApB,GAA2B,EAA3B,GAAmC;UAF1D;QADD,CAFD;;MASA,MAAM,CAAC,OAAP,GAAiB;MAEjB,MAAM,CAAC,MAAP,GAAgB,QAAQ,CAAC,SAAT,CAAmB,QAAnB,EArBhB;;;MAyBA,MAAM,CAAC,GAAP,CAAW,eAAX;IAA4B,QAAA,CAAA,CAAA;eAC3B,MAAM,CAAC,MAAP,GAAgB,QAAQ,CAAC,SAAT,CAAmB,QAAnB;MADW,CAA5B,EAzBA;;;;MAoCA,MAAM,CAAC,gBAAP,GAA0B;aAE1B,MAAM,CAAC,gBAAP,GAA0B,QAAA,CAAC,IAAD;IAAO,IAAP,CAAA;eACzB,MAAM,CAAC,gBAAgB,CAAC,IAAxB,CAA6B;UAAC,UAAA,EAAY,IAAb;UAAmB,MAAA,EAAQ;QAA3B,CAA7B;MADyB;IAvCsE,CAA7D;GAFpC;AAAA",
+  "sourcesContent": [
+    "angular.module(\"myvcFrontApp\")\n\n.controller('PuestosGrupoYearCtrl', ['$scope', 'datos_puestos', 'escalas', '$cookies', '$state', ($scope, datos_puestos, escalas, $cookies, $state)->\n\tdatos_puestos = datos_puestos.data\n\n\t$scope.fechahora = new Date();\n\n\n\t$scope.grupo = datos_puestos.grupo\n\t$scope.year = datos_puestos.year\n\t$scope.alumnos = datos_puestos.alumnos\n\n\n\tif parseInt($state.params.periodo_a_calcular) == 3\n\n\t\tfor alumno in $scope.alumnos\n\t\t\tfor asig in alumno.notas_asig\n\t\t\t\tnota_faltante       =  $scope.USER.nota_minima_aceptada * 4 - asig.nota_final_year*3\n\t\t\t\tasig.nota_faltante  = if nota_faltante <= 0 then '' else nota_faltante\n\n\n\n\t$scope.escalas = escalas\n\n\t$scope.config = $cookies.getObject 'config'\n\t#$scope.config.orientacion = $scope.orientacion\n\t#$scope.config.mostrar_foto = $scope.mostrar_foto\n\n\t$scope.$on 'change_config', ()->\n\t\t$scope.config = $cookies.getObject 'config'\n\n\n\n\n\t####################################################################\n\t#########    Edición de notas de materia      ######################\n\t####################################################################\n\n\n\t$scope.alumnos_materias = []\n\n\t$scope.add_alum_materia = (asig, alum)->\n\t\t$scope.alumnos_materias.push {asignatura: asig, alumno: alum}\n\n\n\n\n])\n"
+  ]
+}

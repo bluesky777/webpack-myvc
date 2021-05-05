@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "ContentEditableDir.js",
+  "sourceRoot": "",
+  "sources": [
+    "ContentEditableDir.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,SAFD,CAEW,iBAFX,EAE8B,QAAA,CAAA,CAAA;AAC5B,WAAO;MACL,QAAA,EAAU,GADL;MAEL,OAAA,EAAS,SAFJ;MAGL,IAAA,EAAM,QAAA,CAAC,KAAD,EAAQ,OAAR,EAAiB,KAAjB,EAAwB,OAAxB,CAAA;AAEJ,YAAA;QAAA,IAAA,GAAO,QAAA,CAAA,CAAA;iBACL,OAAO,CAAC,aAAR,CAAsB,OAAO,CAAC,IAAR,CAAA,CAAtB;QADK;QAIP,OAAO,CAAC,OAAR,GAAkB,QAAA,CAAA,CAAA;iBAChB,OAAO,CAAC,IAAR,CAAa,OAAO,CAAC,UAAR,IAAsB,CAAnC;QADgB;eAGlB,OAAO,CAAC,IAAR,CAAa,mBAAb,EAAkC,QAAA,CAAA,CAAA;iBAChC,KAAK,CAAC,MAAN,CAAa,IAAb;QADgC,CAAlC;MATI;IAHD;EADqB,CAF9B;AAAA",
+  "sourcesContent": [
+    "angular.module(\"myvcFrontApp\")\n\n.directive(\"contenteditable\", ()->\n  return {\n    restrict: \"A\",\n    require: \"ngModel\",\n    link: (scope, element, attrs, ngModel)->\n\n      read = ()->\n        ngModel.$setViewValue(element.html())\n      \n\n      ngModel.$render = ()->\n        element.html(ngModel.$viewValue || 0)\n\n      element.bind(\"blur keyup change\", ()->\n        scope.$apply(read)\n      )\n  }\n)"
+  ]
+}

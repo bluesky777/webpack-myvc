@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "ApplicationController.js",
+  "sourceRoot": "",
+  "sources": [
+    "ApplicationController.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,uBAFZ,EAEqC;IAAC,QAAD;IAAW,QAAA,CAAC,MAAD,CAAA;MAE/C,MAAM,CAAC,WAAP,GAAqB;aAGrB,IAAI,CAAC,SAAS,CAAC,QAAf,GAA0B,QAAA,CAAA,CAAA;AACzB,YAAA,EAAA;IAAA;QAAA,EAAA,GAAK,IAAI,CAAC,QAAL,CAAA,CAAA,GAAkB;QACvB,EAAA,GAAK,IAAI,CAAC,OAAL,CAAA;AAEL,eAAO,CAAC,IAAI,CAAC,WAAL,CAAA,CAAD;IACJ,CAAK,EAAA,GAAG,CAAN,GAAa,EAAb,GAAqB,GAAvB,CAAA,GAA8B,EAD1B;IAEJ,CAAK,EAAA,GAAG,CAAN,GAAa,EAAb,GAAqB,GAAvB,CAAA,GAA8B,EAF1B,CAGJ,CAAC,IAHG,CAGE,GAHF;MAJkB;IALqB,CAAX;GAFrC;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module('myvcFrontApp')\n\n.controller('ApplicationController', ['$scope', ($scope)->\n\n\t$scope.isLoginPage = false\n\n\n\tDate.prototype.yyyymmdd = ()->\n\t\tmm = this.getMonth() + 1; # getMonth() is zero-based\n\t\tdd = this.getDate();\n\n\t\treturn [this.getFullYear(),\n\t\t\t\t\t( if mm>9 then '' else '0') + mm,\n\t\t\t\t\t( if dd>9 then '' else '0') + dd\n\t\t\t\t].join('-');\n\t\t \n\n])"
+  ]
+}

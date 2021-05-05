@@ -1,0 +1,20 @@
+.row
+	.col-xs-12.col-md-12
+		.well.with-header.with-footer
+			.header.bordered-yellow
+				span(style="font-size: 12pt") Listado de Alumnos
+
+			.form-group
+				selector-grupo-dir
+
+			.alert.alert-warning.fade.in.radius-bordered(ng-hide="es_titular" style="margin-top: 10px; margin-bottom: 8px; margin-left: 30px")
+				i.fa-fw.fa.fa-warning
+				strong No eres titular:
+				| No podrás editar estos alumnos
+
+			p Mueva las columnas para mayor comodidad y oculte las que desee:
+			#grid1.grid(ui-grid="gridOptions" ui-grid-exporter ui-grid-move-columns ui-grid-expandable ui-grid-edit ui-grid-resize-columns ui-grid-cellnav ui-grid-auto-resize ui-grid-pinning style="height: 600px")
+
+
+			.footer
+				| Puedes editar con doble click sobre el dato deseado.

@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "Perfil.js",
+  "sourceRoot": "",
+  "sources": [
+    "Perfil.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,OAFD,CAES,QAFT,EAEmB;IAAC,KAAD;IAAQ,IAAR;IAAc,UAAd;IAA0B,OAA1B;IAAmC,QAAA,CAAC,GAAD;IAAM,EAAN;IAAU,QAAV;IAAoB,KAApB,CAAA;AAErD,UAAA;MAAA,IAAA,GAAO,CAAA;aAEP;QAAA,OAAA,EAAS,QAAA,CAAC,OAAD,CAAA;iBACR,IAAA,GAAO;QADC,CAAT;QAGA,IAAA,EAAM,QAAA,CAAA,CAAA;AACL,iBAAO;QADF,CAHN;QAOA,IAAA,EAAM,QAAA,CAAA,CAAA;iBACL,IAAI,CAAC,IAAL,CAAA;QADK,CAPN;QASA,EAAA,EAAI,QAAA,CAAA,CAAA;iBACH,IAAI,CAAC;QADF,CATJ;QAWA,MAAA,EAAQ,QAAA,CAAA,CAAA;iBACP,IAAI,CAAC;QADE,CAXR;QAcA,SAAA,EAAW,QAAA,CAAC,SAAD;IAAY,aAAZ,CAAA;UACV,IAAI,CAAC,SAAL,GAAiB;iBACjB,IAAI,CAAC,aAAL,GAAqB;QAFX,CAdX;QAiBA,UAAA,EAAY,QAAA,CAAC,OAAD;IAAU,WAAV,CAAA;UACX,IAAI,CAAC,OAAL,GAAe;iBACf,IAAI,CAAC,WAAL,GAAkB;QAFP,CAjBZ;QAoBA,UAAA,EAAY,QAAA,CAAA,CAAA;UACX,IAAG,IAAI,CAAC,IAAL,KAAa,SAAhB;AACC,mBAAO,IAAI,CAAC,QAAQ,CAAC,WAAd,CAAA,EADR;WAAA,MAAA;AAGC,mBAAO,IAAI,CAAC,OAAL,GAAe,GAAf,GAAqB,IAAI,CAAC,UAHlC;;QADW,CApBZ;QA0BA,UAAA,EAAY,QAAA,CAAA,CAAA;iBACX,IAAA,GAAO,CAAA;QADI;MA1BZ;IAJqD,CAAnC;GAFnB;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.factory('Perfil', ['App', '$q', '$cookies', '$http', (App, $q, $cookies, $http) ->\n\n\tuser = {}\n\n\tsetUser: (usuario) ->\n\t\tuser = usuario\n\n\tUser: ->\n\t\treturn user\n\n\n\tsave: ->\n\t\tuser.save()\n\tid: ->\n\t\tuser.user_id\n\tidioma: ->\n\t\tuser.idioma_system\n\n\tsetImagen: (imagen_id, imagen_nombre)->\n\t\tuser.imagen_id = imagen_id\n\t\tuser.imagen_nombre = imagen_nombre\n\tsetOficial: (foto_id, foto_nombre)->\n\t\tuser.foto_id = foto_id\n\t\tuser.foto_nombre =foto_nombre\n\tnameToShow: ()->\n\t\tif user.tipo == 'Usuario'\n\t\t\treturn user.username.toUpperCase()\n\t\telse\n\t\t\treturn user.nombres + ' ' + user.apellidos\n\n\tdeleteUser: ()->\n\t\tuser = {}\n\n])"
+  ]
+}

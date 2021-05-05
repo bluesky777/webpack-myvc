@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "loginDialog.js",
+  "sourceRoot": "",
+  "sources": [
+    "loginDialog.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,SAFD,CAEW,aAFX,EAE0B;IAAC,aAAD;IAAgB,KAAhB;IAAuB,QAAA,CAAC,WAAD;IAAc,GAAd,CAAA;AAChD,aAAM;QACL,QAAA,EAAU,GADL;QAEL,WAAA,EAAa,yBAFR;;QAKL,IAAA,EAAM,QAAA,CAAC,KAAD,CAAA;AACL,cAAA;UAAA,UAAA,GAAa,QAAA,CAAA,CAAA;mBACZ,KAAK,CAAC,OAAN,GAAgB;UADJ;UAIb,KAAK,CAAC,OAAN,GAAgB;UAChB,KAAK,CAAC,GAAN,CAAU,WAAW,CAAC,gBAAtB;IAAwC,UAAxC;iBACA,KAAK,CAAC,GAAN,CAAU,WAAW,CAAC,cAAtB;IAAsC,UAAtC;QAPK;MALD;IAD0C,CAAvB;GAF1B;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.directive('loginDialog', ['AUTH_EVENTS', 'App', (AUTH_EVENTS, App)->\n\treturn{\n\t\trestrict: 'A'\n\t\ttemplateUrl: '==login/login-form.html'\n\n\t\t#controller: 'LoginCtrl'\n\t\tlink: (scope)->\n\t\t\tshowDialog = ()->\n\t\t\t\tscope.visible = true\n\n\n\t\t\tscope.visible = false;\n\t\t\tscope.$on(AUTH_EVENTS.notAuthenticated, showDialog);\n\t\t\tscope.$on(AUTH_EVENTS.sessionTimeout, showDialog)\n\t}\n])"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "VotacionesInicioCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "VotacionesInicioCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,sBAFZ,EAEoC;IAAC,QAAD;IAAW,YAAX;IAAyB,WAAzB;IAAsC,eAAtC;IAAuD,KAAvD;IAA8D,aAA9D;IAA6E,QAA7E;IAAuF,QAAA,CAAC,MAAD;IAAS,UAAT;IAAqB,SAArB;IAAgC,aAAhC;IAA+C,GAA/C;IAAoD,WAApD;IAAiE,MAAjE,CAAA;MAG1H,WAAW,CAAC,gBAAZ,CAAA;MAEA,MAAM,CAAC,aAAP,GAAuB,WAAW,CAAC;MAEnC,MAAM,CAAC,IAAP,GAAc;MAEd,IAAG,MAAM,CAAC,EAAP,CAAU,8BAAV,CAAH;QACC,IAAI,MAAM,CAAC,aAAP,CAAqB,CAAC,QAAD;IAAW,WAAX,CAArB,CAAA,IAAiD,MAAM,CAAC,IAAI,CAAC,IAAZ,KAAkB,QAAvE;UACC,MAAM,CAAC,EAAP,CAAU,oCAAV,EADD;;QAGA,IAAG,MAAM,CAAC,aAAP,CAAqB,CAAC,OAAD;IAAU,UAAV,CAArB,CAAH;UACC,MAAM,CAAC,EAAP,CAAU,qCAAV,EADD;SAJD;;IAT0H,CAAvF;GAFpC;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module(\"myvcFrontApp\")\n\n.controller('VotacionesInicioCtrl', ['$scope', '$rootScope', '$interval', 'resolved_user', 'App', 'AuthService', '$state', ($scope, $rootScope, $interval, resolved_user, App, AuthService, $state)->\n\n\t\n\tAuthService.verificar_acceso()\n\t\n\t$scope.hasRoleOrPerm = AuthService.hasRoleOrPerm\n\n\t$scope.USER = resolved_user\n\n\tif $state.is 'panel.actividades.votaciones'\n\t\tif ($scope.hasRoleOrPerm(['alumno', 'acudiente']) || $scope.USER.tipo=='Alumno')\n\t\t\t$state.go 'panel.actividades.votaciones.votar'\n\n\t\tif $scope.hasRoleOrPerm(['admin', 'profesor'])\n\t\t\t$state.go 'panel.actividades.votaciones.config'\n\n\n\n\treturn\n])"
+  ]
+}

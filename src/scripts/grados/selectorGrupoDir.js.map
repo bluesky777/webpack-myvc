@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "selectorGrupoDir.js",
+  "sourceRoot": "",
+  "sources": [
+    "selectorGrupoDir.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,SAFD,CAEW,kBAFX,EAE8B;IAAC,KAAD;IAAQ,QAAR;IAAkB,QAAA,CAAC,GAAD;IAAM,MAAN,CAAA;aAE/C;QAAA,QAAA,EAAU,IAAV;QACA,WAAA,EAAa,oCADb;QAGA,UAAA,EAAY,QAAA,CAAC,MAAD;IAAS,GAAT,CAAA,EAAA;MAHZ;IAF+C,CAAlB;GAF9B;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.directive('selectorGrupoDir',['App', 'Perfil', (App, Perfil)-> \n\n\trestrict: 'EA'\n\ttemplateUrl: \"==grados/selectorGrupoDir.tpl.html\"\n\n\tcontroller: ($scope, App)->\n\n\t\treturn;\n\n\n\t\n\n])\n\n\n\n\n\n\n"
+  ]
+}

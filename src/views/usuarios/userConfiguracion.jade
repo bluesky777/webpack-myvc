@@ -1,0 +1,240 @@
+uib-accordion(close-others="true")
+
+	.panel-default(uib-accordion-group heading="Información personal" is-open="true")
+
+		form(ng-submit="solicitarCambios()")
+
+			div(ng-if="perfilactual.tipo=='Al'")
+				.widget
+					.widget-header.bordered-bottom.bordered-pink
+						span.widget-caption Básica
+					.widget-body( )
+						.row
+							.col-lg-2.col-sm-12
+								img(style="width: 200px" ng-src="{{perfilPath + perfilactual.foto_nombre}}")
+
+							.col-lg-10.col-sm-12
+								.row
+									.form-group.col-lg-4.col-sm-6
+										label(for="perfilactual-nombres") Nombres
+										input.form-control#perfilactual-nombres(type="text" ng-model="perfilactual.nombres" placeholder="Nombres")
+									.form-group.col-lg-4.col-sm-6
+										label(for="perfilactual-apellidos") Apellidos
+										input#perfilactual-apellidos.form-control(type="text" ng-model="perfilactual.apellidos" placeholder="Apellidos")
+									.form-group.col-lg-4.col-sm-6.col-xs-12(style="margin-bottom: 5px;")
+										label Sexo
+										.row
+											.col-lg-6.col-sm-4.col-xs-12
+												.radio
+													label
+														input.inverted(type="radio" name="sexo" value="M" ng-model="perfilactual.sexo")
+														span.text Masculino
+											.col-lg-6.col-sm-4.col-xs-12
+												.radio
+													label
+														input.inverted(type="radio" name="sexo" value="F" ng-model="perfilactual.sexo")
+														span.text Femenino
+								.row
+									.form-group.col-lg-4.col-sm-6
+										label(for="perfilactual-no-matr") Número Matrícula
+										input.form-control#perfilactual-no-matr(type="text" ng-model="perfilactual.no_matricula" placeholder="Número de matrícula" disabled="disabled")
+									.form-group.col-lg-4.col-sm-6.col-xs-12(style="margin-bottom: 12px;")
+										label(for="perfilactual-fecha-nac") Fecha de nacimiento
+										.controls
+											.input-group
+												span.input-group-addon( ng-click="data.isOpen = true")
+													i.fa.fa-calendar
+												input.form-control.active#perfilactual-fecha-nac(type="text" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="perfilactual.fecha_nac" is-open="data.isOpen" ng-click="data.isOpen = true" max-date="'2020-12-12'" datepicker-options="dateOptions" close-text="Aceptar" current-text="Hoy" clear-text="Borrar" placeholder="Fecha nacimiento")
+
+
+				.widget
+					.widget-header.bordered-bottom.bordered-pink
+						span.widget-caption Nacimiento
+					.widget-body
+						.row
+
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Pais
+								ui-select(ng-model="perfilactual.pais_nac" on-select="paisNacSelect($item, $model)" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Pais nacimiento" allow-clear="true") {{$select.selected.pais}} ({{$select.selected.abrev}})
+									ui-select-choices(repeat="pais in paises | filter: $select.search")
+										div(ng-bind-html="pais.pais | highlight: $select.search")
+										small {{ pais.departamento | highlight: $select.search}}
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Departamento
+								ui-select(ng-model="perfilactual.departamento_nac" on-select="departNacSelect($item, $model)" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Departamento nacimiento" allow-clear="true") {{$select.selected.departamento}}
+									ui-select-choices(repeat="departamento in departamentosNac | filter: $select.search")
+										div(ng-bind-html="departamento.departamento | highlight: $select.search")
+
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Ciudad
+								ui-select(ng-model="perfilactual.ciudad_nac" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Ciudad nacimiento" allow-clear="true") {{$select.selected.ciudad}}
+									ui-select-choices(repeat="ciudad in ciudadesNac | filter: $select.search")
+										div(ng-bind-html="ciudad.ciudad | highlight: $select.search")
+
+
+
+				.widget
+					.widget-header.bordered-bottom.bordered-pink
+						span.widget-caption Documento
+					.widget-body
+						.row
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Tipo
+								ui-select(ng-model="perfilactual.tipo_doc" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Tipo de documento" allow-clear="true") {{$select.selected.tipo}}{{ ' ('+$select.selected.abrev+')'}}
+									ui-select-choices(repeat="tipo_doc in tipos_doc")
+										div(ng-bind-html="tipo_doc.tipo | highlight: $select.search")
+										small {{ tipo_doc.abrev}}
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label(for="perfilactual-documento") Número documento
+								input#perfilactual-documento.form-control(type="text" ng-model="perfilactual.documento" placeholder="Documento" disabled="disabled")
+
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Pais
+								ui-select(ng-model="perfilactual.pais_doc" on-select="paisDocSelecionado($item, $model)" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Pais documento" allow-clear="true") {{$select.selected.pais}} ({{$select.selected.abrev}})
+									ui-select-choices(repeat="pais in paises | filter: $select.search")
+										div(ng-bind-html="pais.pais | highlight: $select.search")
+										small {{ pais.departamento | highlight: $select.search}}
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Departamento
+								ui-select(ng-model="perfilactual.departamento_doc" on-select="departDocSeleccionado($item, $model)" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Departamento documento" allow-clear="true") {{$select.selected.departamento}}
+									ui-select-choices(repeat="departamento in departamentos | filter: $select.search")
+										div(ng-bind-html="departamento.departamento | highlight: $select.search")
+
+							.form-group.col-lg-4.col-sm-6.col-xs-12
+								label Ciudad
+								ui-select(ng-model="perfilactual.ciudad_doc" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Ciudad documento" allow-clear="true") {{$select.selected.ciudad}}
+									ui-select-choices(repeat="ciudad in ciudades | filter: $select.search")
+										div(ng-bind-html="ciudad.ciudad | highlight: $select.search")
+				.widget
+					.widget-header.bordered-bottom.bordered-pink
+						span.widget-caption Datos extra
+					.widget-body
+
+						.row
+							.form-group.col-lg-2.col-sm-6.col-xs-12
+								label(for="perfilactual-tipo-sangre") Tipo de sangre
+								ui-select(ng-model="perfilactual.tipo_sangre" style="width: 100%;" disabled="disabled")
+									ui-select-match(placeholder="Tipo de sangre" allow-clear="true") {{$select.selected.sangre}}
+									ui-select-choices(repeat="sangre in sangres | filter: $select.search")
+										div(ng-bind-html="sangre.sangre | highlight: $select.search")
+
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-eps") EPS
+								input#perfilactual-eps.form-control(type="text" ng-model="perfilactual.eps" placeholder="EPS" disabled="disabled")
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-telefono") Teléfono
+								input#perfilactual-telefono.form-control(type="text" ng-model="perfilactual.telefono" placeholder="Teléfono" disabled="disabled")
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-celular") Celular
+								input#perfilactual-celular.form-control(type="text" ng-model="perfilactual.celular" placeholder="Celular" disabled="disabled")
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-direccion") Direccion
+								input#perfilactual-direccion.form-control(type="text" ng-model="perfilactual.direccion" placeholder="Direccion" disabled="disabled")
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-barrio") Barrio
+								input#perfilactual-barrio.form-control(type="text" ng-model="perfilactual.barrio" placeholder="Barrio" disabled="disabled")
+
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-estrato") Estrato
+								.spinner.spinner-horizontal
+									input.spinner-input.form-control#perfilactual-estrato(type="text" minlength="0" maxlength="10" ng-model="perfilactual.estrato" disabled="disabled")
+									.spinner-buttons.btn-group
+										button.btn.spinner-down.blueberry(type="button" ng-click="restarEstrato()")
+											i.fa.fa-minus
+										button.btn.spinner-up.purple(type="button" ng-click="sumarEstrato()")
+											i.fa.fa-plus
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-religion") Religión
+								input#perfilactual-religion.form-control(type="text" ng-model="perfilactual.religion" placeholder="Religión" disabled="disabled")
+							.form-group.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-email") E-mail
+								input#perfilactual-email.form-control(type="text" ng-model="perfilactual.email" placeholder="E-mail" disabled="disabled")
+							.col-lg-3.col-sm-6.col-xs-12
+								label(for="perfilactual-facebook") Facebook
+								input#perfilactual-facebook.form-control(type="text" ng-model="perfilactual.facebook" placeholder="Facebook" disabled="disabled")
+							.col-lg-3.col-sm-6.col-xs-12
+								label Está a paz y salvo
+							.col-lg-3.col-sm-6.col-xs-12
+								span Deuda
+
+
+
+
+
+
+
+
+			center
+				button.btn.btn-primary.btn-lg(type='submit' ng-if="canConfig") Solicitar cambios
+			br
+			br
+
+	.panel-default(uib-accordion-group heading="Datos de usuario" ng-if="canConfig")
+		form(role="form")
+			.row
+				.col-sm-8
+					.form-group
+						label Nombre de usuario ({{perfilactual.username}})
+						span.input-icon.icon-right
+							input.form-control(ng-model="newusername" type="text" placeholder="Nombre de usuario" ng-init="newusername==perfilactual.username" typeahead="nombresusu as nombresusu.username for nombresusu in nombresdeusuario | filter:{username:$viewValue} | limitTo:8")
+							i.fa.fa-user.azure
+						br
+						br
+						button.btn.btn-warning(ng-click="comprobarusername(newusername)")
+							span(ng-hide="comprobando")
+								| Comprobar
+							span(ng-show="comprobando")
+								| Comprobando
+								i.fa.fa-spinner.fa-spin
+						.alert.alert-warning.fade.in(ng-show="mostrarErrorUsername")
+							.fa-fw.fa.fa-warning
+							span(ng-show="newusername!=perfilactual.username") Usuario no disponible.
+							span(ng-show="newusername==perfilactual.username") Ya es tu nombre de usuario actual.
+			button.btn.btn-primary(type='button' ng-click="CambiarUsername(newusername)" ng-class="{disabled:mostrarErrorUsername || newusername=='' || newusername==perfilactual.username || canSaveUsername==false }") Guardar usuario
+
+		hr.wide
+		form(role="form" style="margin-top: 30px")
+			.row
+				.col-sm-8
+					.form-group
+						label Correo electrónico para cuando pierdas la contraseña
+						span.input-icon.icon-right
+							input.form-control(ng-model="perfilactual.email_restore" type="email" placeholder="Escriba Email" )
+							i.fa.fa-user.azure
+			button.btn.btn-primary(type='button' ng-click="guardarEmailRestore(perfilactual.email_restore)" ng-disabled="guardandoEmail") Guardar correo
+
+
+
+	.panel-default(uib-accordion-group heading="Cambiar contraseña" ng-if="canConfig" is-open="status.passCambiado")
+		form(role="form" ng-submit="CambiarPass(newpass, newpassverif, passantiguo)")
+			.row
+				.col-sm-7
+					.form-group
+						label Contraseña antigua
+						span.input-icon.icon-right
+							input.form-control(type='password' placeholder='Contraseña antigua' ng-model="passantiguo")
+							i.fa.fa-user.azure
+					.form-group
+						label Contraseña nueva
+						span.input-icon.icon-right
+							input.form-control(type='password' required placeholder='Contraseña nueva' ng-model="newpass")
+							i.fa.fa-user.azure
+						.alert.alert-warning.fade.in(ng-show="mostrarErrorPassword")
+							|La contraseña debe ser repetida exactamente
+						br
+						br
+						label Repita la contraseña nueva
+						span.input-icon.icon-right
+							input.form-control(type='password' placeholder='Verificar contraseña nueva' ng-model="newpassverif")
+							i.fa.fa-user.azure
+			button.btn.btn-primary(type='submit' ng-disabled="cambiandoPass") Cambiar contraseña
+
+
+

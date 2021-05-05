@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "PapeleraConfig.js",
+  "sourceRoot": "",
+  "sources": [
+    "PapeleraConfig.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CACA,CAAC,MADD,CACQ;IAAC,gBAAD;IAAmB,YAAnB;IAAiC,aAAjC;IAAgD,QAAA,CAAC,MAAD;IAAS,UAAT;IAAqB,WAArB,CAAA;aAEvD,MACC,CAAC,KADF,CACQ,gBADR;IAEE;QAAA,GAAA,EAAK,YAAL;QACA,KAAA,EACC;UAAA,aAAA,EACC;YAAA,WAAA,EAAa,8BAAb;YACA,UAAA,EAAY;UADZ,CADD;UAGA,eAAA,EACC;YAAA,WAAA,EAAa,8BAAb;YACA,UAAA,EAAY,iBADZ;YAEA,OAAA,EACC;cAAA,MAAA,EAAQ;gBAAC,QAAA,CAAA,CAAA;yBACR;gBADQ,CAAD;;YAAR;UAHD;QAJD,CAFD;QAYA,IAAA,EACC;UAAA,WAAA,EAAa,UAAb;UACA,OAAA,EAAS,aADT;;UAGA,SAAA,EAAW;QAHX;MAbD,CAFF;IAFuD,CAAhD;GADR;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n.config ['$stateProvider', 'USER_ROLES', 'PERMISSIONS', ($state, USER_ROLES, PERMISSIONS) ->\n\n\t$state\n\t\t.state 'panel.papelera',\n\t\t\turl: '^/papelera'\n\t\t\tviews: \n\t\t\t\t'maincontent':\n\t\t\t\t\ttemplateUrl: \"==papelera/papelera.tpl.html\"\n\t\t\t\t\tcontroller: 'PapeleraCtrl'\n\t\t\t\t'headerContent':\n\t\t\t\t\ttemplateUrl: \"==panel/panelHeader.tpl.html\"\n\t\t\t\t\tcontroller: 'PanelHeaderCtrl'\n\t\t\t\t\tresolve:\n\t\t\t\t\t\ttitulo: [->\n\t\t\t\t\t\t\t'Papelera de reciclaje'\n\t\t\t\t\t\t]\n\t\t\tdata: \n\t\t\t\tdisplayName: 'Papelera'\n\t\t\t\ticon_fa: 'fa fa-trash'\n\t\t\t\t#Permissions: [PERMISSIONS.can_see_alumnos]\n\t\t\t\tpageTitle: 'Papelera - MyVc'\n\n]"
+  ]
+}

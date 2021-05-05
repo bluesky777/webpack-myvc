@@ -1,0 +1,360 @@
+
+<div ng-class="{'page-carta-horizontal': config.orientacion=='carta_horizontal', 'page-oficio-horizontal': config.orientacion=='oficio_horizontal','page-vertical': config.orientacion=='vertical' }" class="salto-pagina">
+  <div class="row encabezado-planilla">
+    <div class="col-lg-12 col-xs-12">
+      <div class="row">
+        <div class="col-lg-2 col-xs-2"><img ng-src="{{::perfilPath + year.logo}}" style="width: 70px;" class="img-responsive logo-colegio menos-margin"></div>
+        <div class="col-lg-8 col-xs-8 title-encabezado-planilla">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="nombre-colegio">{{::year.nombre_colegio + ' - ' + year.abrev_colegio}} {{::USER.year}}</div>
+              <div style="font-size: 15pt" class="nombre-colegio">COMISIÓN DE EVALUACIÓN Y PROMOCIÓN</div>
+              <div class="descripcion-title">ACTA DE REUNIÓN FINAL</div>
+              <div class="descripcion-title">DEFINICIÓN DE PROMOCIÓN Y REPROBACIÓN AÑO LECTIVO {{::USER.year}}</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 20px" class="col-lg-12 col-xs-12">
+          <div class="row body-boletin">
+            <div class="col-lg-12 col-xs-12">
+              <div style="text-align: left">
+                Basado en el Sistema de Evaluación y Promoción del
+                {{::year.nombre_colegio}} de {{::year.ciudad}}, según el MEN la Ley 115 y el decreto 1290 del 23 de Abril del 2009,
+                 {{::year.resolucion}},
+                 siendo las
+                <div uib-timepicker ng-model="dato.hora_acta" hour-step="1" minute-step="5" show-meridian="true" class="hidden-print"></div><b>{{ dato.hora_acta | date:'HH:mma' }}</b><br class="hidden-print"><b> del día</b>
+                <input type="date" ng-model="dato.dia_acta" class="hidden-print"><b>{{dato.dia_acta | date:"dd 'de' MMMM"}} del año en curso,</b> se reúnen en sus instalaciones la comisión de evaluación y promoción. Dicha comisión analiza cada uno de los resultados académicos de los estudiantes, para tratar las promociones y reprobaciones respectivas. Esta definición se soporta en los procesos establecidos al igual que en los  informes académicos  en pleno conocimiento de los padres y de los distintos representantes y de la comunidad educativa en general.<br><br>
+                <div ng-bind-html="dato.texto_acta_eval"></div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-9 hidden-print">
+              <label style="background-color: aqua; padding: 5px;">Escriba un texto extra (opcional) para agregar al reporte:</label>
+              <textarea ng-model="dato.texto_acta_eval" ng-model-options="{ updateOn: 'blur' }" style="width: 90%; height: 100px; " ng-change="cambia_texto_informativo()"></textarea><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-repeat="grupo in ::grupos">
+  <div ng-class="{'page-carta-horizontal': config.orientacion=='carta_horizontal', 'page-oficio-horizontal': config.orientacion=='oficio_horizontal','page-vertical': config.orientacion=='vertical', 'salto-pagina': $last==false }">
+    <div class="row">
+      <div style="font-weight: bold !important;" class="col-xs-12 text-center">{{::grupo.nombre + ' - ' + grupo.nombres_titular + ' ' + grupo.apellidos_titular }}</div>
+      <div class="col-lg-12 col-xs-12">
+        <div class="row body-boletin">
+          <div style="padding:0px" class="col-lg-12 col-xs-12 materias">
+            <div class="materia-item">
+              <table class="table-bordered table-bordered2 table-striped table-striped2">
+                <tr style="background-color: #99caed !important;">
+                  <th rowspan="2">No</th>
+                  <th rowspan="2" class="text-center">Alumnos</th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>No</div>
+                    <div>matrícula</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Sexo</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Edad</div>
+                  </th>
+                  <th colspan="3" class="text-center">
+                    <div>Fechas</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt; min-width: 100px;" class="text-center">
+                    <div>Causa de retiro</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Estrato</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>¿Finalizó</div>
+                    <div>año?</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Promedio</div>
+                    <div>%</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Promovido</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Años estadía</div>
+                    <div>en institución</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Religión</div>
+                  </th>
+                </tr>
+                <tr style="height: 25px; background-color: #99caed !important;" class="text-center">
+                  <th style="width: 65px;" class="text-center">Ingreso</th>
+                  <th style="width: 65px;" class="text-center">Retiro</th>
+                  <th class="text-center">Deserción</th>
+                </tr>
+                <tbody style="font-size: 9pt">
+                  <tr ng-repeat="alumno in ::grupo.alumnos" ng-click="editarAlumno(alumno)" uib-popover-template="views+'alumnos/popoverAlumnoInfo.tpl.html'" popover-title="{{alumno.nombres + ' ' + alumno.apellidos}}" ng-class="{'acta-alumno-no-promovido': alumno.promovido=='No' }" popover-trigger="'mouseenter'" popover-popup-delay="500" popover-append-to-body="true" class="altura-22">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                      <div ng-style="alumno.estado=='ASIS' ? {'font-style': 'italic'} : {}" style="position: relative; vertical-align: middle;" class="ellipsis250 alumno-planilla">{{::alumno.apellidos}} {{::alumno.nombres}}<span ng-show="alumno.estado=='PREM'" style="font-size: 8pt; right: 0px; position: absolute; background-color: white; top: -2px;">(Prema)</span><span ng-show="alumno.estado=='DESE'" style="font-size: 8pt; right: 0px; position: absolute; background-color: white; top: -2px;">(Dese)</span><span ng-show="alumno.estado=='RETI'" style="font-size: 8pt; right: 0px; position: absolute; background-color: white; top: -2px;">(Reti)</span></div>
+                    </td>
+                    <td class="text-center"><span>{{ ::alumno.no_matricula }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.sexo }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.edad }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.fecha_matricula }}</span></td>
+                    <td class="text-center"><span ng-show="alumno.estado=='RETI'">{{ ::alumno.fecha_retiro }}</span></td>
+                    <td class="text-center"><span ng-show="alumno.estado=='DESE'">{{ ::alumno.fecha_retiro }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.razon_retiro }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.estrato }}</span></td>
+                    <td class="text-center"><span ng-show="alumno.estado=='RETI' || alumno.estado=='DESE'">No</span><span ng-show="alumno.estado=='PREM' || alumno.estado=='MATR' ">Si</span></td>
+                    <td class="text-center"><span ng-show="::alumno.promedio!=''">{{ ::alumno.promedio }}%</span></td>
+                    <td class="text-center"><span>{{ ::alumno.promovido }}</span></td>
+                    <td class="text-center"><span>{{ ::alumno.anios_in_cole }}</span></td>
+                    <td class="text-center"><span class="camel">{{::alumno.religion.toLowerCase()}}</span></td>
+                  </tr>
+                  <tr style="height: 17px;" class="altura-22">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-class="{'page-carta-horizontal': config.orientacion=='carta_horizontal', 'page-oficio-horizontal': config.orientacion=='oficio_horizontal','page-vertical': config.orientacion=='vertical', 'salto-pagina': $last==false }">
+    <div class="row">
+      <div style="font-weight: bold !important;" class="col-xs-12 text-center">Movimiento de estudiantes y resultados académicos por grados durante el año escolar {{::grupo.nombre }} - {{::USER.year}}</div>
+      <div class="col-lg-12 col-xs-12">
+        <div class="row body-boletin">
+          <div style="padding:0px" class="col-lg-12 col-xs-12 materias">
+            <div class="materia-item">
+              <table class="table-bordered table-bordered2 table-striped table-striped2">
+                <tr style="background-color: #99caed !important;">
+                  <th rowspan="2" style="width: 300px;" class="text-center">Concepto</th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Cantidad</div>
+                  </th>
+                  <th colspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Masculino</div>
+                  </th>
+                  <th colspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Femenino</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt; width: 300px;" class="text-center">
+                    <div>Concepto</div>
+                  </th>
+                  <th rowspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Cantidad</div>
+                  </th>
+                  <th colspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Masculino</div>
+                  </th>
+                  <th colspan="2" style="font-size: 8pt" class="text-center">
+                    <div>Femenino</div>
+                  </th>
+                </tr>
+                <tr style="height: 25px; background-color: #99caed !important;" class="text-center">
+                  <th style="width: 65px;" class="text-center">Cant</th>
+                  <th style="width: 65px;" class="text-center">Porc %</th>
+                  <th style="width: 65px;" class="text-center">Cant</th>
+                  <th style="width: 65px;" class="text-center">Porc %</th>
+                  <th style="width: 65px;" class="text-center">Cant</th>
+                  <th style="width: 65px;" class="text-center">Porc %</th>
+                  <th style="width: 65px;" class="text-center">Cant</th>
+                  <th style="width: 65px;" class="text-center">Porc %</th>
+                </tr>
+                <tbody style="font-size: 9pt">
+                  <tr>
+                    <td>Total estudiantes que iniciaron año escolar</td>
+                    <td ng-click="verAlumnos(grupo.cant_matri_per1)" ng-class="{'nota-sobre':grupo.cant_matri_per1_sobre }" ng-mouseenter="grupo.cant_matri_per1_sobre=true;" ng-mouseleave="grupo.cant_matri_per1_sobre=false;" class="text-center"><b>{{ ::grupo.cant_matri_per1.length }}</b></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_matri_per1_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_matri_per1.length&gt;0">{{ ::(grupo.cant_matri_per1_m *100 / grupo.cant_matri_per1.length) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_matri_per1.length - grupo.cant_matri_per1_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_matri_per1.length&gt;0">{{ ::(( (grupo.cant_matri_per1.length - grupo.cant_matri_per1_m) *100) / grupo.cant_matri_per1.length) | number:0 }}%</span></td>
+                    <td><span>Estudiantes promovidos con</span><b> cero (0)</b><span> asignaturas pendientes</span></td>
+                    <td class="text-center">{{ ::grupo.promovidos_0_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_0_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.promovidos_0_perdidas&gt;0">{{ ::(grupo.promovidos_0_perdidas_m *100 / grupo.promovidos_0_perdidas) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_0_perdidas_f }}</span></td>
+                    <td class="text-center">
+                      <spann ng-show="::grupo.promovidos_0_perdidas&gt;0">{{ ::(grupo.promovidos_0_perdidas_f *100 / grupo.promovidos_0_perdidas) | number:0 }}%</spann>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Estudiantes que ingresaron durante el año escolar</td>
+                    <td class="text-center">{{ ::grupo.cant_matri_despues }}</td>
+                    <td class="text-center"><span>{{ ::grupo.cant_matri_despues_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_matri_despues&gt;0">{{ ::(grupo.cant_matri_despues_m *100 / grupo.cant_matri_despues ) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_matri_despues - grupo.cant_matri_despues_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_matri_despues&gt;0">{{ ::(( (grupo.cant_matri_despues - grupo.cant_matri_despues_m) *100) / grupo.cant_matri_despues) | number:0 }}%</span></td>
+                    <td><span>Estudiantes promovidos con</span><b> una (1)</b><span> asignatura  pendiente</span></td>
+                    <td class="text-center">{{ ::grupo.promovidos_1_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_1_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.promovidos_1_perdidas&gt;0">{{ ::(grupo.promovidos_1_perdidas_m *100 / grupo.promovidos_1_perdidas) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_1_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.promovidos_1_perdidas&gt;0">{{ ::(grupo.promovidos_1_perdidas_f *100 / grupo.promovidos_1_perdidas) | number:0 }}%</span></td>
+                  </tr>
+                  <tr>
+                    <td>Estudiantes que terminaron el año escolar</td>
+                    <td ng-click="verAlumnos(grupo.cant_terminaron)" ng-class="{'nota-sobre':grupo.cant_terminaron_sobre }" ng-mouseenter="grupo.cant_terminaron_sobre=true;" ng-mouseleave="grupo.cant_terminaron_sobre=false;" class="text-center">{{ ::grupo.cant_terminaron.length }}</td>
+                    <td class="text-center"><span>{{ ::grupo.cant_terminaron_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_terminaron.length&gt;0">{{ ::(grupo.cant_terminaron_m *100 / grupo.cant_terminaron.length) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_terminaron_f }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_terminaron.length&gt;0">{{ ::(grupo.cant_terminaron_f *100 / grupo.cant_terminaron.length) | number:0 }}%</span></td>
+                    <td><span>Estudiantes no promovidos con</span><b> dos (2)</b><span> asignaturas pendientes</span></td>
+                    <td class="text-center">{{ ::grupo.no_promovidos_2_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_2_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.no_promovidos_2_perdidas&gt;0">{{ ::(grupo.promovidos_2_perdidas_m *100 / grupo.no_promovidos_2_perdidas) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_2_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.no_promovidos_2_perdidas&gt;0">{{ ::(grupo.promovidos_2_perdidas_f *100 / grupo.no_promovidos_2_perdidas) | number:0 }}%</span></td>
+                  </tr>
+                  <tr>
+                    <td>Estudiantes desertores durante el año (no retiraron documentación)</td>
+                    <td class="text-center">{{ ::grupo.cant_desertores }}</td>
+                    <td class="text-center"><span>{{ ::grupo.cant_desertores_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_desertores&gt;0">{{ ::(grupo.cant_desertores_m *100 / grupo.cant_desertores) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_desertores_f }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_desertores&gt;0">{{ ::(grupo.cant_desertores_f *100 / grupo.cant_desertores) | number:0 }}%</span></td>
+                    <td><span>Estudiantes no promovidos con</span><b> tres (3)</b><span> asignaturas pendientes</span></td>
+                    <td class="text-center">{{ ::grupo.no_promovidos_3_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_3_perdidas_m }}</span></td>
+                    <td class="text-center">
+                      <spann ng-show="::(grupo.no_promovidos_3_perdidas) &gt; 0">{{ ::(grupo.no_promovidos_3_perdidas_m *100 / grupo.no_promovidos_3_perdidas) | number:0 }}%</spann>
+                    </td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_3_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.no_promovidos_3_perdidas) &gt; 0">{{ ::(grupo.no_promovidos_3_perdidas_f *100 / grupo.no_promovidos_3_perdidas) | number:0 }}%</span></td>
+                  </tr>
+                  <tr>
+                    <td>Estudiantes retirados (retiraron documentación)</td>
+                    <td class="text-center">{{ ::grupo.cant_retirados }}</td>
+                    <td class="text-center"><span>{{ ::grupo.cant_retirados_m }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_retirados&gt;0">{{ ::(grupo.cant_retirados_m *100 / grupo.cant_retirados) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.cant_retirados_f }}</span></td>
+                    <td class="text-center"><span ng-show="::grupo.cant_retirados&gt;0">{{ ::(grupo.cant_retirados_f *100 / grupo.cant_retirados) | number:0 }}%</span></td>
+                    <td><span>Estudiantes no promovidos con</span><b> cuatro (4)</b><span> o más asignaturas pendientes</span></td>
+                    <td class="text-center">{{ ::grupo.no_promovidos_4_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_4_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.no_promovidos_4_perdidas) &gt; 0">{{ ::(grupo.no_promovidos_4_perdidas_m *100 / grupo.no_promovidos_4_perdidas) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_4_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.no_promovidos_4_perdidas) &gt; 0">{{ ::(grupo.no_promovidos_4_perdidas_f *100 / grupo.no_promovidos_4_perdidas) | number:0 }}%</span></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 30px;"><span>Total estudiantes</span><b> PROMOVIDOS</b></td>
+                    <td class="text-center">{{ ::grupo.promovidos_0_perdidas + grupo.promovidos_1_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_0_perdidas_m + grupo.promovidos_1_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.promovidos_0_perdidas + grupo.promovidos_1_perdidas) &gt; 0">{{ ::( (grupo.promovidos_0_perdidas_m + grupo.promovidos_1_perdidas_m) *100 / grupo.promovidos_0_perdidas + grupo.promovidos_1_perdidas) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.promovidos_0_perdidas_f + grupo.promovidos_1_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.promovidos_0_perdidas + grupo.promovidos_1_perdidas) &gt; 0">{{ ::( (grupo.promovidos_0_perdidas_f + grupo.promovidos_1_perdidas_f) *100 / (grupo.promovidos_0_perdidas + grupo.promovidos_1_perdidas)) | number:0 }}%</span></td>
+                    <td style="height: 30px;"><span>Total de estudiantes</span><b> NO PROMOVIDOS</b></td>
+                    <td class="text-center">{{ ::grupo.no_promovidos_2_perdidas + grupo.no_promovidos_3_perdidas + grupo.no_promovidos_4_perdidas }}</td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_2_perdidas_m + grupo.no_promovidos_3_perdidas_m + grupo.no_promovidos_4_perdidas_m }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.no_promovidos_2_perdidas + grupo.no_promovidos_3_perdidas + grupo.no_promovidos_4_perdidas) &gt; 0">{{ ::((grupo.no_promovidos_2_perdidas_m + grupo.no_promovidos_3_perdidas_m + grupo.no_promovidos_4_perdidas_m) *100 / (grupo.no_promovidos_2_perdidas + grupo.no_promovidos_3_perdidas + grupo.no_promovidos_4_perdidas)) | number:0 }}%</span></td>
+                    <td class="text-center"><span>{{ ::grupo.no_promovidos_2_perdidas_f + grupo.no_promovidos_3_perdidas_f + grupo.no_promovidos_4_perdidas_f }}</span></td>
+                    <td class="text-center"><span ng-show="::(grupo.no_promovidos_2_perdidas + grupo.no_promovidos_3_perdidas + grupo.no_promovidos_4_perdidas) &gt; 0">{{ ::((grupo.no_promovidos_2_perdidas_f + grupo.no_promovidos_3_perdidas_f + grupo.no_promovidos_4_perdidas_f) *100 / (grupo.no_promovidos_2_perdidas + grupo.no_promovidos_3_perdidas + grupo.no_promovidos_4_perdidas)) | number:0 }}%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Tabla de cantidades por periodos-->
+          <!--.col-lg-12.col-xs-12.materias(style="padding:0px")
+          .materia-item
+            table.table-bordered.table-bordered2.table-striped.table-striped2
+              tr(style="background-color: #99caed !important;")
+          
+                th.text-center(style="width: 200px;")
+                  | Periodos
+                th.text-center(style="font-size: 8pt")
+                  div Matriculados
+                th.text-center(style="font-size: 8pt")
+                  div Retirados
+                th.text-center(style="font-size: 8pt")
+                  div Desertores
+                th.text-center(style="font-size: 8pt")
+                  div Total
+          
+          
+          
+              tbody
+                tr
+                  td.text-center(style="width: 65px;")
+                    | Per 1
+                  td.text-center.puntero(style="width: 65px;" ng-click="verAlumnos(grupo.cant_matri_per1)"
+                    ng-class="{'nota-sobre':grupo.cant_matri_per1_sobre }" ng-mouseenter="grupo.cant_matri_per1_sobre=true;" ng-mouseleave="grupo.cant_matri_per1_sobre=false;")
+                    | {{ ::grupo.cant_matri_per1.length }}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+          
+                tr
+                  td.text-center(style="width: 65px;")
+                    | Per 2
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+          
+                tr
+                  td.text-center(style="width: 65px;")
+                    | Per 3
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+          
+                tr
+                  td.text-center(style="width: 65px;")
+                    | Per 4
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+          
+                tr(style="font-weight: bold;")
+                  td.text-center(style="width: 65px;")
+                    | Total
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+                  td.text-center(style="width: 65px;")
+                    | {{}}
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

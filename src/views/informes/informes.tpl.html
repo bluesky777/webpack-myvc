@@ -1,0 +1,353 @@
+
+<div ng-init="opened=true" ng-show="opened" class="row hidden-print">
+  <div class="col-lg-12 col-xs-12">
+    <div class="widget">
+      <div class="widget-header bg-blue"><i class="widget-icon fa fa-bar-chart"></i>
+        <div class="widget-caption">Informes</div>
+        <div class="widget-buttons"><a href="" ng-init="minimized = false" ng-click="minimized = !minimized"><i ng-class="{false: 'fa-minus', true: 'fa-plus'}[minimized]" class="fa"></i></a><a href="" ng-click="opened=false"><i class="fa fa-times"></i></a></div>
+      </div>
+      <div ng-class="{'ng-hide':minimized}" class="widget-body">
+        <div ng-show="::periodos_desactualizados" style="padding-bottom: 20px;" ng-if="::!hasRoleOrPerm(['psicólogo'])" class="row">
+          <div ng-repeat="periodo in ::periodos_desactualizados" class="col-lg-12">
+            <div class="alert alert-warning fade in radius-bordered"><i class="fa-fw fa fa-warning"></i>Notas finales desactualizadas<strong>   Per {{periodo.numero}}</strong></div>
+            <button ng-repeat="grupo in ::periodo.grupos" ng-click="calcularGrupoPeriodo(grupo, periodo)" ng-disabled="grupo.desabilitado" uib-tooltip="{{grupo.nombre}}" class="btn btn-default">{{grupo.abrev}}</button>
+            <button ng-click="calcularPeriodo(periodo)" class="btn btn-primary">Calcular periodo {{::periodo.numero}}</button>
+          </div>
+        </div>
+        <div style="padding-bottom: 20px;" ng-if="::!hasRoleOrPerm(['psicólogo'])" class="row">
+          <div class="col-lg-12">
+            <div class="btn-group">
+              <button ng-click="calcularPeriodo(periodo)" ng-repeat="periodo in periodos_grupos" uib-tooltip="No es necesario a menos que veas alguna nota definitiva desactualizada." class="btn btn-sm btn-default shiny">Calcular definitivas per{{periodo.numero}}</button>
+            </div>
+            <uib-progressbar value="porcentaje" ng-show="porcentaje &gt; -1" class="progress-xlg progress-striped active"><b>{{porcentaje}}% Completado</b></uib-progressbar>
+          </div>
+        </div>
+        <uib-tabset active="config.informe_tab_actual" class="widget-main">
+          <uib-tab heading="Boletines" index="'boletines'" select="selectTab('boletines')">
+            <div ng-if="false" class="row">
+              <div class="col-lg-7 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label>Calcular hasta el periodo:</label>
+                  <input type="number" ng-model="config.periodo_a_calcular" min="1" max="4">
+                </div>
+              </div>
+            </div><br>
+            <div style="margin-bottom: 30px;" class="row">
+              <div ng-if="::hasRoleOrPerm(['psicólogo'])" class="col-xs-12"><a href="" ng-click="verSimat()" class="btn btn-default">SIMAT {{USER.year}}</a></div>
+              <div class="col-lg-12 col-xs-12">Tipo de boletín
+                <div class="btn-group">
+                  <button ng-click="eligirTipo(1)" ng-class="{'active': tipo_boletin==1 }" uib-tooltip="Boletín muy detallado del periodo" class="btn btn-default">Tipo 1</button>
+                  <button ng-click="eligirTipo(2)" ng-class="{'active': tipo_boletin==2 }" uib-tooltip="Boletín no tan largo" class="btn btn-default">Tipo 2</button>
+                  <button ng-click="eligirTipo(3)" ng-class="{'active': tipo_boletin==3 }" uib-tooltip="Boletín corto con definitivas por periodos" class="btn btn-default">Tipo 3</button>
+                  <button ng-click="eligirTipo(4)" ng-class="{'active': tipo_boletin==4 }" uib-tooltip="Para Preescolar" class="btn btn-default">Tipo 4</button>
+                </div>
+              </div>
+            </div>
+            <hr class="wide"><span ng-show="tipo_boletin">
+              <div ng-show="tipo_boletin==4" class="row">
+                <div class="col-lg-12 col-xs-12">
+                  <div class="form-group">
+                    <label>Generar boletin final de preescolar</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.generar_bol_final_prees" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                  <div class="form-group">
+                    <label style="margin-right: 9px;">Grupo</label>
+                    <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                      <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                      <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                        <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select><a href="" ng-click="verBoletinesGrupo(tipo_boletin)" class="btn btn-default">Grupo completo</a>
+                  </div>
+                </div>
+              </div>
+              <div ng-show="datos.grupo" class="row">
+                <div class="col-lg-12 col-xs-12">
+                  <div class="form-group">
+                    <label>Alumnos</label>
+                    <ui-select ng-model="datos.selected_alumnos" multiple on-select="selectAlumnos($item)" style="width: 100%;">
+                      <ui-select-match placeholder="Alumnos del grupo {{datos.grupo.abrev}}" allow-clear="true"><img ng-src="{{perfilPath + $item.foto_nombre}}" style="width:25px; height:25px;">{{$item.apellidos}} {{$item.nombres}}</ui-select-match>
+                      <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search"></small></ui-select-choices>
+                    </ui-select><a href="" ng-click="verBoletinesAlumnos(tipo_boletin)" class="btn btn-default">Cargar boletines</a>
+                  </div>
+                </div>
+              </div>
+              <div ng-hide="datos.grupo || USER.tipo=='Profesor'" class="row">
+                <div class="col-lg-12 col-xs-12">
+                  <div class="form-group">
+                    <label>Alumno</label>
+                    <ui-select ng-model="datos.selected_alumno" on-select="selectAlumno($item)" style="width: 300px;">
+                      <ui-select-match placeholder="Elige un alumno" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.apellidos}} {{$select.selected.nombres}}</ui-select-match>
+                      <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.apellidos + ' ' + alumno.nombres | highlight: $select.search"></small></ui-select-choices>
+                    </ui-select><a href="" ng-click="verBoletinAlumno(tipo_boletin)" class="btn btn-default">Cargar boletin</a>
+                  </div>
+                </div>
+              </div><br>
+              <div ng-hide="USER.tipo=='Profesor'" class="row">
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Mostrar foto</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.mostrar_foto" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+                <div ng-if="::!hasRoleOrPerm(['psicólogo'])" class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Firma rector</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.show_firma_rector" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+                <div ng-if="::!hasRoleOrPerm(['psicólogo'])" class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Firma titular</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.show_firma_titular" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Mostrar rojos</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.show_rojos" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+                <div ng-show="tipo_boletin==2" class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Mostrar porcentajes</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.show_porcentajes" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+                <div ng-show="tipo_boletin==2" class="col-lg-2 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>Mostrar tabla perdidas</label>
+                    <label>
+                      <input type="checkbox" ng-model="config.show_tabla_perdidas" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="::!hasRoleOrPerm(['psicólogo'])" class="row">
+                <div class="col-lg-12 col-xs-12">
+                  <div class="form-group">
+                    <label>Imagen de fondo</label>
+                    <ui-select ng-model="config.imagen_fondo" on-select="putConfigCookie($item)" style="width: 300px; display: inline-block;">
+                      <ui-select-match placeholder="Imagen de Fondo" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.nombre}}" style="width:25px; height:25px;">{{$select.selected.nombre}}</ui-select-match>
+                      <ui-select-choices repeat="imagen in imgs_public | filter: $select.search"><img ng-src="{{perfilPath + imagen.nombre}}" style="width:25px; height:25px;"><small ng-bind-html="imagen.nombre | highlight: $select.search"></small></ui-select-choices>
+                    </ui-select>
+                    <label>Cantidad:</label>
+                    <input type="number" ng-model="config.cant_imagenes" min="1" max="30">
+                  </div>
+                </div>
+              </div></span><br><br>
+            <button ng-click="pdfMaker()" ng-show="false" class="btn btn-default">Prueba pdf</button>
+          </uib-tab>
+          <uib-tab heading="Puestos" index="'puestos'" select="selectTab('puestos')" ng-if="::!hasRoleOrPerm(['psicólogo'])">
+            <div class="row">
+              <div class="col-lg-7 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label>Calcular hasta el periodo:</label>
+                  <input type="number" ng-model="config.periodo_a_calcular" min="1" max="4">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Grupo</label>
+              <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Elige un grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                  <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <div class="btn-group"><a href="" ng-click="verPuestosPeriodo()" class="btn btn-default">Puestos del periodo</a><a href="" ng-click="verPuestosYear()" class="btn btn-success">Puestos del año</a></div>
+            </div>
+            <div ng-if="$parent.USER.tipo!='Profesor'" class="row">
+              <div class="col-lg-7 col-sm-12 col-xs-12">
+                <div class="btn-group"><a href="" ng-click="verTodosPuestosPeriodo()" class="btn btn-default">Todos del periodo</a><a href="" ng-click="verTodosPuestosYear()" class="btn btn-success">Todos del año</a></div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab heading="Planillas" index="'planillas'" select="selectTab('planillas')" ng-if="::!hasRoleOrPerm(['psicólogo'])">
+            <div class="row">
+              <div class="col-lg-7 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label>Calcular hasta el periodo:</label>
+                  <input type="number" ng-model="config.periodo_a_calcular" min="1" max="4">
+                </div>
+              </div>
+            </div><br>
+            <div class="form-group">
+              <label>Profesor</label>
+              <ui-select ng-model="datos.profesor" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Elige un profesor" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.nombres + ' ' + $select.selected.apellidos}}</ui-select-match>
+                <ui-select-choices repeat="profe in profesores | filter: $select.search"><img ng-src="{{perfilPath + profe.foto_nombre}}" style="width:25px; height:25px;"><small ng-bind-html="profe.nombres + ' ' + profe.apellidos | highlight: $select.search"></small></ui-select-choices>
+              </ui-select>
+              <div uib-dropdown class="btn-group"><a href="" ng-click="verPlanillasProfe()" class="btn btn-default">Ver planillas</a><a href="" ng-click="verNotasPerdidasProfesor()" uib-tooltip="Acumuladas de los periodos" class="btn btn-default">Notas perdidas</a>
+                <button type="button" uib-dropdown-toggle class="btn btn-default">
+                  <div class="caret"></div>
+                  <div class="sr-only">Notas perdidas</div>
+                </button>
+                <ul uib-dropdown-menu role="menu" aria-labelledby="split-button" class="dropdown-menu">
+                  <li role="menuitem"><a ng-click="verNotasPerdidasProfesor(true)" href="" uib-tooltip="Solo periodo seleccionado">Notas perdidas periodo</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label style="margin-right: 13px;">Grupo</label>
+              <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                <ui-select-match placeholder="Elige un grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                  <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select><a href="" ng-click="verPlanillasGrupo()" class="btn btn-default">Ver planillas</a>
+            </div>
+            <div uib-dropdown class="btn-group"><a href="" ng-click="verPlanillasControlTardanzas()" uib-tooltip="Usada para las tardanzas y ausencias en la entrada a la institución" class="btn btn-default">Control entrada</a><a href="" ng-click="verPlanillasAsistenciaClase()" uib-tooltip="Para las tardandas y tardanzas a cada clase" class="btn btn-default">Planillas asistencias clases</a><a href="" ng-click="verAusencias()" class="btn btn-default">Ver ausencias</a><a href="" ng-click="verNotasPerdidasTodos()" uib-tooltip="Acumuladas de los periodos - Todos los docentes" class="btn btn-default">Notas perdidas todos</a>
+              <button type="button" uib-dropdown-toggle class="btn btn-default">
+                <div class="caret"></div>
+                <div class="sr-only">Notas perdidas</div>
+              </button>
+              <ul uib-dropdown-menu role="menu" aria-labelledby="split-button" class="dropdown-menu">
+                <li role="menuitem"><a ng-click="verNotasPerdidasTodos(true)" href="" uib-tooltip="Solo periodo seleccionado - Todos los docentes">Todos - Notas perdidas periodo</a></li>
+              </ul>
+            </div><br>
+            <div uib-dropdown class="btn-group">
+              <button id="split-button" type="button" ng-click="verObservadorVertical()" uib-tooltip="Observador del alumno para imprimir" class="btn btn-default">Observador vertical</button>
+              <button type="button" uib-dropdown-toggle class="btn btn-default">
+                <div class="caret"></div>
+                <div class="sr-only">Observador vertical</div>
+              </button>
+              <ul uib-dropdown-menu role="menu" aria-labelledby="split-button" class="dropdown-menu">
+                <li role="menuitem"><a ng-click="verObservadorVerticalTodos()" href="">Observador vertical - Todos</a></li>
+              </ul><a href="" ng-click="verObservadorHorizontal()" class="btn btn-default">Observador horizontal</a>
+            </div>
+            <div class="btn-group"><a href="" ng-click="verSimat()" class="btn btn-default">SIMAT {{USER.year}}</a>
+              <!--a.btn.btn-default(href="" type="file" ngf-select="importarSimat($file, $invalidFiles)"
+              accept=".xls,.xlsx" ngf-max-size="1MB") Importar SIMAT {{USER.year}}
+              
+              -->
+            </div><a href="" ng-click="asistenciaPadres()" class="btn btn-default">Asistencia Padres</a><a href="" ng-click="listasPersonalizadas()" class="btn btn-default">Listas personalizadas</a><br><a href="" ng-click="mostrarUnidadesProfe()" uib-tooltip="Mostrar toda@s l@s {{USER.unidades_displayname}} del docente seleccionado" class="btn btn-default">{{ USER.unidades_displayname }}</a><br><br>
+            <div class="row">
+              <div class="col-lg-2 col-sm-4 col-xs-12">
+                <div class="form-group">
+                  <label>Mostrar foto</label>
+                  <label>
+                    <input type="checkbox" ng-model="config.mostrar_foto" class="checkbox-slider slider-icon colored-blue"><span class="text si-no"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab heading="Finales" index="'finales'" select="selectTab('finales')" ng-if="::!hasRoleOrPerm(['psicólogo'])"><span ng-include="'views/informes/tabFinales.tpl.html'"></span></uib-tab>
+          <uib-tab heading="Varios" index="'varios'" select="selectTab('varios')" ng-if="::!hasRoleOrPerm(['psicólogo'])">
+            <div class="row">
+              <div class="col-lg-12 col-xs-12">
+                <div class="form-group">
+                  <label style="margin-right: 9px;">Grupo</label>
+                  <ui-select ng-model="datos.grupo" on-select="selectGrupo($item)" style="width: 300px; display: inline-block;">
+                    <ui-select-match placeholder="Grupo" allow-clear="true">{{$select.selected.nombre}}</ui-select-match>
+                    <ui-select-choices repeat="grupo in grupos | filter: $select.search | orderBy:'orden'">
+                      <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!--a.btn.btn-default(href="" ng-click="verNotasActualesAlumnosGrupo()") Notas año actual-->
+                </div>
+              </div>
+            </div>
+            <div ng-show="datos.grupo" class="row">
+              <div class="col-lg-12 col-xs-12">
+                <div class="form-group">
+                  <label>Alumnos</label>
+                  <ui-select ng-model="datos.selected_alumnos" multiple on-select="selectAlumnos($item)" style="width: 100%;">
+                    <ui-select-match placeholder="Alumnos del grupo {{datos.grupo.abrev}}" allow-clear="true"><img ng-src="{{perfilPath + $item.foto_nombre}}" style="width:25px; height:25px;">{{$item.nombres}}</ui-select-match>
+                    <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+                  </ui-select><a href="" ng-click="verNotasActualesAlumnos()" class="btn btn-default">Notas año actual</a><a href="" ng-click="verNotasPerdidasActualesAlumnos()" class="btn btn-default">Notas perdidas año actual</a>
+                </div>
+              </div>
+            </div>
+            <div ng-show="!datos.grupo" class="row">
+              <div class="col-lg-12 col-xs-12">
+                <div class="form-group">
+                  <label>Alumno</label>
+                  <ui-select ng-model="datos.selected_alumno" on-select="selectAlumno($item)" style="width: 300px;">
+                    <ui-select-match placeholder="Elige un alumno" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.foto_nombre}}" style="width:25px; height:25px;">{{$select.selected.nombres}} {{$select.selected.apellidos}}</ui-select-match>
+                    <ui-select-choices repeat="alumno in filtered_alumnos | filter: $select.search"><img ng-src="{{perfilPath + alumno.foto_nombre}}" style="width:25px; height:25px;"><small ng-show="alumno.estado=='DESE'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (DESERTOR)&lt;/i&gt;'"></small><small ng-show="alumno.estado=='RETI'" ng-bind-html="'&lt;i&gt; -- ' + (alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search) + ' -- (RETIRADO)&lt;/i&gt;'"></small><small ng-hide="alumno.estado=='RETI' || alumno.estado=='DESE'" ng-bind-html="alumno.nombres + ' ' + alumno.apellidos | highlight: $select.search"></small></ui-select-choices>
+                  </ui-select><a href="" ng-click="verNotasActualesAlumno()" class="btn btn-default">Notas año actual</a><a href="" ng-click="verNotasPerdidasActualesAlumno()" class="btn btn-default">Notas perdidas año actual</a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-xs-12">
+                <div ng-if="USER.tipo!='Profesor'" class="btn-group"><a href="" ng-click="verListadoDocentes()" class="btn btn-default">Listado docentes</a><a href="" ng-click="excelListadoDocentes()" uib-tooltip="Exportar a Excel listado docentes" class="btn btn-default"><i class="fa fa-file"></i></a></div><a href="" ng-click="verCantAlumnosEnGrupos()" uib-tooltip="Ver cantidad de alumnos por grupos" class="btn btn-default">Alumnos en grupos</a><a href="" ng-click="verCumpleanosPorMeses()" uib-tooltip="Ver cumpleaños por cada mes" class="btn btn-default">Cumpleaños meses</a><a href="" ng-click="verActaEvaluacionPromocion()" uib-tooltip="Ver acta de evaluación y promoción" ng-if="USER.tipo!='Profesor'" class="btn btn-default">Acta de evaluación y promoción</a>
+              </div>
+            </div>
+            <div ng-show="$state.is('panel.informes.cumpleanos_por_meses')" style="margin-top: 20px;" class="row">
+              <div class="col-lg-12 col-xs-12">
+                <div class="form-group">
+                  <label>Imagen de fondo</label>
+                  <ui-select ng-model="config.imagen_fondo" on-select="putConfigCookie($item)" style="width: 300px; display: inline-block;">
+                    <ui-select-match placeholder="Imagen de Fondo" allow-clear="true"><img ng-src="{{perfilPath + $select.selected.nombre}}" style="width:25px; height:25px;">{{$select.selected.nombre}}</ui-select-match>
+                    <ui-select-choices repeat="imagen in imgs_public | filter: $select.search"><img ng-src="{{perfilPath + imagen.nombre}}" style="width:25px; height:25px;"><small ng-bind-html="imagen.nombre | highlight: $select.search"></small></ui-select-choices>
+                    <label>Cantidad:</label>
+                    <input type="number" ng-model="config.cant_imagenes" min="1" max="30">
+                  </ui-select>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+        <hr class="wide">
+        <h5>Orientación de la página:</h5>
+        <div class="control-group">
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="config.orientacion" value="oficio_horizontal">
+              <div class="text">Oficio Horizontal</div>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="config.orientacion" value="carta_horizontal">
+              <div class="text">Carta horizontal</div>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="config.orientacion" value="vertical">
+              <div class="text">Vertical</div>
+            </label>
+          </div>
+        </div>
+        <div ng-show="$state.is('panel.informes.puestos_todos_year') || $state.is('panel.informes.puestos_todos_periodo') || $state.is('panel.informes.puestos_grupo_year') || $state.is('panel.informes.puestos_grupo_periodo') ">
+          <hr class="wide">
+          <h5>Filtrar:</h5>
+          <div class="control-group">
+            <div class="radio">
+              <label>Mostrar alumnos con:
+                <input type="number" ng-model="filtrar.materias_perdidas" ng-value="0" min="0" max="20" ng-init="filtrar.materias_perdidas=0">materias perdidas o más.
+              </label>
+            </div>
+          </div>
+          <button uib-tooltip="Solo funciona con PUESTOS DEL AÑO calculados hasta el TERCER perido. Nota que falta en cuarto periodo." ng-click="mostrar_nota_faltante()" class="btn btn-primary">Mostrar nota faltante:<span ng-show="mostrar_faltante"> Si</span><span ng-hide="mostrar_faltante"> No</span></button>
+        </div>
+        <hr class="wide">
+        <h5>{{descripcion_informe}}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ng-class="{'altura-informe': !$state.is('panel.informes.certificados_estudio') } "-->
+<div ui-view="report_content" class="informes-pages altura-informe">
+  <h5 style="text-align: center">Aquí saldrán tus reportes</h5>
+</div>

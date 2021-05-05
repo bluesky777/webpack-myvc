@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "VariosCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "VariosCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,uBAFZ,EAEoC;IAAC,QAAD;IAAW,KAAX;IAAkB,QAAlB;IAA4B,YAA5B;IAA0C,QAA1C;IAAoD,QAAA,CAAC,MAAD;IAAS,GAAT;IAAc,MAAd;IAAsB,UAAtB;IAAkC,MAAlC,CAAA;MAEvF,MAAM,CAAC,IAAP,GAAc,MAAM,CAAC,IAAP,CAAA;MACd,MAAM,CAAC,UAAP,GAAoB,UAAU,CAAC,IAAI,CAAC;MACpC,MAAM,CAAC,IAAP,GAAoB,UAAU,CAAC,IAAI,CAAC;MAEpC,MAAM,CAAC,UAAP,GAAoB,GAAG,CAAC,MAAJ,GAAW;aAI/B,MAAM,CAAC,KAAP,CAAa,oBAAb;IAAmC,MAAM,CAAC,UAAU,CAAC,MAAlB,GAA2B,eAA9D;IAVuF,CAApD;GAFpC,CAiBA,CAAC,UAjBD,CAiBY,6BAjBZ,EAiB0C;IAAC,QAAD;IAAW,KAAX;IAAkB,QAAlB;IAA4B,QAA5B;IAAsC,QAAtC;IAAgD,QAAA,CAAC,MAAD;IAAS,GAAT;IAAc,MAAd;IAAsB,MAAtB;IAA8B,MAA9B,CAAA;AAEzF,UAAA,IAAA;IAAA,CAAA;IAAA,GAAA;IAAA;MAAA,MAAM,CAAC,IAAP,GAA4B,MAAM,CAAC,IAAP,CAAA;MAC5B,MAAM,CAAC,iBAAP,GAA4B,MAAM,CAAC,IAAI,CAAC;MACxC,MAAM,CAAC,cAAP,GAA4B,MAAM,CAAC,IAAI,CAAC;MAExC,MAAM,CAAC,UAAP,GAA0B,GAAG,CAAC,MAAJ,GAAW;MAGrC,MAAM,CAAC,kBAAP,GAA4B;MAC5B,MAAM,CAAC,kBAAP,GAA4B;MAC5B,MAAM,CAAC,kBAAP,GAA4B;AAE5B;MAAA,KAAA,qCAAA;;QACC,MAAM,CAAC,kBAAP,GAA4B,MAAM,CAAC,kBAAP,GAA4B,IAAI,CAAC;QAC7D,MAAM,CAAC,kBAAP,GAA4B,MAAM,CAAC,kBAAP,GAA4B,IAAI,CAAC;QAC7D,MAAM,CAAC,kBAAP,GAA4B,MAAM,CAAC,kBAAP,GAA4B,IAAI,CAAC;MAH9D;aAKA,MAAM,CAAC,KAAP,CAAa,oBAAb;IAAmC,MAAM,CAAC,iBAAiB,CAAC,MAAzB,GAAkC,WAArE;IAlByF,CAAhD;GAjB1C;AAAA",
+  "sourcesContent": [
+    "angular.module('myvcFrontApp')\n\n.controller('ListadoProfesoresCtrl',['$scope', 'App', 'Perfil', 'profesores', '$state', ($scope, App, Perfil, profesores, $state)->\n\n\t$scope.USER = Perfil.User()\n\t$scope.profesores = profesores.data.profesores\n\t$scope.year       = profesores.data.year\n\n\t$scope.perfilPath = App.images+'perfil/'\n\n\n\n\t$scope.$emit 'cambia_descripcion', $scope.profesores.length + '  profesores.'\n\n\n])\n\n.controller('VerCantAlumnosPorGruposCtrl',['$scope', 'App', 'Perfil', 'grupos', '$state', ($scope, App, Perfil, grupos, $state)->\n\n\t$scope.USER               = Perfil.User()\n\t$scope.grupos_cantidades  = grupos.data.grupos\n\t$scope.periodos_total     = grupos.data.periodos_total\n\n\t$scope.perfilPath       = App.images+'perfil/'\n\n\n\t$scope.cant_total_alumnos = 0\n\t$scope.cant_total_hombres = 0\n\t$scope.cant_total_mujeres = 0\n\n\tfor grup in $scope.grupos_cantidades\n\t\t$scope.cant_total_alumnos = $scope.cant_total_alumnos + grup.cant_alumnos\n\t\t$scope.cant_total_hombres = $scope.cant_total_hombres + grup.cant_hombres\n\t\t$scope.cant_total_mujeres = $scope.cant_total_mujeres + grup.cant_mujeres\n\n\t$scope.$emit 'cambia_descripcion', $scope.grupos_cantidades.length + '  grupos.'\n\n\n])\n\n\n\n\n"
+  ]
+}

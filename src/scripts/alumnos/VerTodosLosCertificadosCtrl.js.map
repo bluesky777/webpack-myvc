@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "VerTodosLosCertificadosCtrl.js",
+  "sourceRoot": "",
+  "sources": [
+    "VerTodosLosCertificadosCtrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,MAAR,CAAe,cAAf,CAEA,CAAC,UAFD,CAEY,6BAFZ,EAE2C;IAAC,QAAD;IAAW,KAAX;IAAkB,QAAlB;IAA4B,WAA5B;IAAyC,WAAzC;IAAsD,SAAtD;IAAiE,aAAjE;IAAgF,QAAhF;IAA0F,OAA1F;IAAmG,QAAA,CAAC,MAAD;IAAS,GAAT;IAAc,MAAd;IAAsB,SAAtB;IAAiC,MAAjC;IAAyC,OAAzC;IAAkD,WAAlD;IAA+D,MAA/D;IAAuE,KAAvE,CAAA;MAE7I,WAAW,CAAC,gBAAZ,CAAA;MAEA,OAAO,CAAC,GAAR,CAAY,MAAZ;MACA,KAAK,CAAC,GAAN,CAAU,wBAAV;IAAoC;QAAC,SAAA,EAAW,MAAM,CAAC,MAAM,CAAC;MAA1B,CAApC,CAAyE,CAAC,IAA1E,CAA+E,QAAA,CAAC,CAAD,CAAA;QAC9E,OAAO,CAAC,GAAR,CAAY,CAAC,CAAC,IAAd;eACA,MAAM,CAAC,YAAP,GAAsB,CAAC,CAAC;MAFsD,CAA/E;IAGE,QAAA,CAAC,EAAD,CAAA;eACD,MAAM,CAAC,KAAP,CAAa,iCAAb;MADC,CAHF;IAL6I,CAAnG;GAF3C;AAFA",
+  "sourcesContent": [
+    "'use strict'\n\nangular.module(\"myvcFrontApp\")\n\n.controller('VerTodosLosCertificadosCtrl', ['$scope', 'App', '$state', '$interval', '$uibModal', '$filter', 'AuthService', 'toastr', '$http', ($scope, App, $state, $interval, $modal, $filter, AuthService, toastr, $http)->\n\n\tAuthService.verificar_acceso()\n\n\tconsole.log($state)\n\t$http.put('::certificados-persona', {alumno_id: $state.params.alumno_id}).then((r)->\n\t\tconsole.log(r.data)\n\t\t$scope.certificados = r.data\n\t, (r2)->\n\t\ttoastr.error 'No se pudo traer los requisitos'\n\t)\n\n\n\treturn\n])\n"
+  ]
+}
