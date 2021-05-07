@@ -27,7 +27,7 @@
   },
   "scripts": {
     "dev": "webpack serve --open --hot --mode development",
-    "build": "webpack --progress --hide-modules --mode production"
+    "build": "webpack --progress --mode production"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^8.1.1",

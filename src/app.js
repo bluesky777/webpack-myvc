@@ -72,17 +72,17 @@ require('./scripts/calendar')
     //	dominio = location.protocol + '//lalvirtual.com/'
 
     //server = dominio + 'myvc_server/public/'
-    //server 		= dominio + '5myvc/public/'
+    //server 		= dominio + '6myvc/public/'
     //frontapp 	= dominio + 'myvc_front/'
     dominio = location.protocol + '//' + location.hostname + '/';
     if (location.hostname === 'localhost') {
       dominio = location.protocol + '//' + location.hostname + ':8080/';
     }
-    server = dominio + '5myvc/public/';
+    server = dominio + '6myvc/public/';
     frontapp = location.origin + '/myvc_front/';
     // Para el demo
     if (location.href.indexOf('demo') > 0) {
-      server = dominio + 'demo/5myvc/public/';
+      server = dominio + 'demo/6myvc/public/';
     }
     return {
       Server: server,
