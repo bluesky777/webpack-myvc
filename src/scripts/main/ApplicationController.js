@@ -3,6 +3,7 @@
   angular.module('myvcFrontApp').controller('ApplicationController', [
     '$scope',
     function($scope) {
+      console.log('Aplicacion cargandoo');
       $scope.isLoginPage = false;
       return Date.prototype.yyyymmdd = function() {
         var dd,

@@ -20,6 +20,8 @@
     AuthService,
     AUTH_EVENTS,
     toastr) {
+
+      
       //- Asignamos la información de los estados actuales para poder manipularla en las vistas.
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;

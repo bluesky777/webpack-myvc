@@ -28,6 +28,7 @@
     USER_ROLES,
     toastrConfig,
     uiSelectConfig) {
+      
       $httpProvider.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
       $httpProvider.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
       $httpProvider.defaults.useXDomain = true;
@@ -150,6 +151,7 @@
         }
       });
       //$locationProvider.html5Mode true
+
 
       //$rootScopeProvider.bigLoader = true
       angular.extend(toastrConfig,

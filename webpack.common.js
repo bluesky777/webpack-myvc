@@ -11,7 +11,6 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,15 +19,17 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new copyWebpackPlugin({
-      from: 'src/scripts', to: 'dist/scripts'
+      patterns: [
+        { from: 'src/views', to: 'views' },
+        { from: 'src/fonts', to: 'fonts' },
+        { from: 'src/images', to: 'images' },
+        { from: 'src/styles', to: 'styles' },
+      ]
     })
   ],
   module: {
     rules: [
-      {
-        test: /\.html$/,
-        loader: 'html-loader'
-      }
+
     ],
   },
 };
