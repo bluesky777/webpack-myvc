@@ -95,4 +95,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VerPublicacionModalCtrl.js.map
+//VerPublicacionModalCtrl.js.map

@@ -291,4 +291,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=OrdinalesCtrl.js.map
+//OrdinalesCtrl.js.map

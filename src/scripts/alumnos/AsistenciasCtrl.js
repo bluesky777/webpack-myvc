@@ -401,4 +401,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=AsistenciasCtrl.js.map
+//AsistenciasCtrl.js.map

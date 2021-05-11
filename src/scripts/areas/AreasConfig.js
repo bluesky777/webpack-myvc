@@ -166,4 +166,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=AreasConfig.js.map
+//AreasConfig.js.map

@@ -150,5 +150,3 @@
   ]);
 
 }).call(this);
-
-//# sourceMappingURL=EditarPreguntaCtrl.js.map

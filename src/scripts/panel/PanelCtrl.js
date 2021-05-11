@@ -199,4 +199,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PanelCtrl.js.map
+//PanelCtrl.js.map

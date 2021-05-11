@@ -56,4 +56,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VerObservadorPeriodoCtrl.js.map
+//VerObservadorPeriodoCtrl.js.map

@@ -66,4 +66,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=UnidadesProfesorCtrl.js.map
+//UnidadesProfesorCtrl.js.map

@@ -39,4 +39,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=RemoveImageCtrl.js.map
+//RemoveImageCtrl.js.map

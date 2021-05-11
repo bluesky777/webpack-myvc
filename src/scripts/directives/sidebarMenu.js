@@ -336,4 +336,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=sidebarMenu.js.map
+//sidebarMenu.js.map

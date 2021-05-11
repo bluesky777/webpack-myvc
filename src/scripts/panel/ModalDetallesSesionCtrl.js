@@ -49,4 +49,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ModalDetallesSesionCtrl.js.map
+//ModalDetallesSesionCtrl.js.map

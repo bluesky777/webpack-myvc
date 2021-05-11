@@ -241,4 +241,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ActaEvaluacionPromocionCtrl.js.map
+//ActaEvaluacionPromocionCtrl.js.map

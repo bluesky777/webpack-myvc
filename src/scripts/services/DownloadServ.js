@@ -73,4 +73,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=DownloadServ.js.map
+//DownloadServ.js.map

@@ -71,4 +71,4 @@ $http.get('::candidatos/conaspiraciones').then((r)->
 
 }).call(this);
 
-//# sourceMappingURL=ResultadosCtrl.js.map
+//ResultadosCtrl.js.map

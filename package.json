@@ -1,6 +1,7 @@
 {
   "name": "myvc-front",
   "description": "Mi Cole Virtual migrado a webpack",
+  "main": "src/app.js",
   "author": "Joseth Guerrero",
   "dependencies": {
     "angular": "1.6.0",
@@ -27,16 +28,22 @@
   },
   "scripts": {
     "dev": "webpack serve --open --hot --mode development",
-    "build": "webpack --progress --mode production"
+    "build-original": "webpack --progress --mode production",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.6.0",
     "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   }
 }

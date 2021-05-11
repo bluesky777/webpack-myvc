@@ -107,4 +107,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=BoletinesPeriodoCtrl.js.map
+//BoletinesPeriodoCtrl.js.map

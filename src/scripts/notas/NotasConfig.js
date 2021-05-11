@@ -294,4 +294,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=NotasConfig.js.map
+//NotasConfig.js.map

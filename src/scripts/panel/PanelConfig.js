@@ -234,4 +234,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PanelConfig.js.map
+//PanelConfig.js.map

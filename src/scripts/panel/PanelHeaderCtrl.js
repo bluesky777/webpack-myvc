@@ -24,4 +24,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PanelHeaderCtrl.js.map
+//PanelHeaderCtrl.js.map

@@ -53,4 +53,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VariosCtrl.js.map
+//VariosCtrl.js.map

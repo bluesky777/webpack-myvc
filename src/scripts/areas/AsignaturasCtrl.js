@@ -565,4 +565,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=AsignaturasCtrl.js.map
+//AsignaturasCtrl.js.map

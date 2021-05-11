@@ -84,4 +84,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ForceRemovePapelera.js.map
+//ForceRemovePapelera.js.map

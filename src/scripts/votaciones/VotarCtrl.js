@@ -103,4 +103,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VotarCtrl.js.map
+//VotarCtrl.js.map

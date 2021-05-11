@@ -219,4 +219,3 @@ import angular from 'angular'
 
 }).call(this);
 
-//# sourceMappingURL=app.js.map

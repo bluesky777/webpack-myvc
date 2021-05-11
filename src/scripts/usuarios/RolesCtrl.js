@@ -76,4 +76,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=RolesCtrl.js.map
+//RolesCtrl.js.map

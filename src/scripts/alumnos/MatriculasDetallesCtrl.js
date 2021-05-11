@@ -105,4 +105,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=MatriculasDetallesCtrl.js.map
+//MatriculasDetallesCtrl.js.map

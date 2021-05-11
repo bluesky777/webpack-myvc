@@ -33,4 +33,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VotacionesInicioCtrl.js.map
+//VotacionesInicioCtrl.js.map

@@ -201,4 +201,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=UserConfiguracionCtrl.js.map
+//UserConfiguracionCtrl.js.map

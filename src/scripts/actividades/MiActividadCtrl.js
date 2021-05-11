@@ -112,5 +112,3 @@
   ]);
 
 }).call(this);
-
-//# sourceMappingURL=MiActividadCtrl.js.map

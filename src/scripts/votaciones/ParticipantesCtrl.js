@@ -248,4 +248,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ParticipantesCtrl.js.map
+//ParticipantesCtrl.js.map

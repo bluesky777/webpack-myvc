@@ -157,4 +157,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=BoletinesFinalesCtrl.js.map
+//BoletinesFinalesCtrl.js.map

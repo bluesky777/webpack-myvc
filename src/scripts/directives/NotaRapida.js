@@ -224,5 +224,3 @@
   // make element draggable
 
 }).call(this);
-
-//# sourceMappingURL=NotaRapida.js.map

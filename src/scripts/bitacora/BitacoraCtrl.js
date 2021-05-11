@@ -100,4 +100,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=BitacoraCtrl.js.map
+//BitacoraCtrl.js.map

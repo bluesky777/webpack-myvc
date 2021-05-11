@@ -56,4 +56,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VerObservadorCompletoCtrl.js.map
+//VerObservadorCompletoCtrl.js.map

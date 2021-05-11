@@ -3,4 +3,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=SidebarHideDir.js.map
+//SidebarHideDir.js.map

@@ -24851,11 +24851,6 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle + .text:after {
   top: 34%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311002}}
-.select2-search input.select2-active {
-  background: #fff url(img/select2-spinner.gif) no-repeat 100%;
-  background: url(img/select2-spinner.gif) no-repeat 100%, linear-gradient(top, #fff 85%, #eee 99%);
-}
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311010}}
 .select2-container-active .select2-choice, .select2-container-active .select2-choices {
@@ -25037,10 +25032,6 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle + .text:after {
   display: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311138}}
-.select2-more-results.select2-active {
-  background: #f4f4f4 url(img/select2-spinner.gif) no-repeat 100%;
-}
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311140}}
 .select2-more-results {
@@ -25117,11 +25108,6 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle + .text:after {
   border: 0;
   box-shadow: none;
   background: transparent !important;
-}
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311198}}
-.select2-container-multi .select2-choices .select2-search-field input.select2-active {
-  background: #fff url(img/select2-spinner.gif) no-repeat 100% !important;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Applications\/XAMPP\/xamppfiles\/htdocs\/myvc_front\/app\/styles\/tema\.scss}line{font-family:\0000311201}}

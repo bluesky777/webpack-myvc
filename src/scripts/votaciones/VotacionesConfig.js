@@ -206,4 +206,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=VotacionesConfig.js.map
+//VotacionesConfig.js.map

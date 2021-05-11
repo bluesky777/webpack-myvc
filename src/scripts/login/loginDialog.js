@@ -25,4 +25,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=loginDialog.js.map
+//loginDialog.js.map

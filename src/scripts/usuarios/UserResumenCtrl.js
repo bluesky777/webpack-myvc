@@ -10,4 +10,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=UserResumenCtrl.js.map
+//UserResumenCtrl.js.map

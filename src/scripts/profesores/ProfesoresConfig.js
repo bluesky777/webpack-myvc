@@ -59,4 +59,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ProfesoresConfig.js.map
+//ProfesoresConfig.js.map

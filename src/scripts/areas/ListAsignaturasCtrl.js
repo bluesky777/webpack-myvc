@@ -215,4 +215,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ListAsignaturasCtrl.js.map
+//ListAsignaturasCtrl.js.map

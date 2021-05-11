@@ -580,5 +580,3 @@
   ]);
 
 }).call(this);
-
-//# sourceMappingURL=AlumnosConfig.js.map

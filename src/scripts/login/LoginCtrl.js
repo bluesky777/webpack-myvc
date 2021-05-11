@@ -221,4 +221,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=LoginCtrl.js.map
+//LoginCtrl.js.map

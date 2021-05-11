@@ -807,4 +807,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ListAlumnosCtrl.js.map
+//ListAlumnosCtrl.js.map

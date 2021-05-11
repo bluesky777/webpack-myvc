@@ -122,4 +122,4 @@ $http.get('certificados-estudio/certificado-grupo/10', {}, {responseType: 'blob'
 
 }).call(this);
 
-//# sourceMappingURL=CertificadosEstudioCtrl.js.map
+//CertificadosEstudioCtrl.js.map

@@ -132,4 +132,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=verUniformesAlumnoPeriodoModal.js.map
+//verUniformesAlumnoPeriodoModal.js.map

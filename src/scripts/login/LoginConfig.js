@@ -3,4 +3,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=LoginConfig.js.map
+//LoginConfig.js.map

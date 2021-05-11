@@ -35,4 +35,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=BitacoraConfig.js.map
+//BitacoraConfig.js.map

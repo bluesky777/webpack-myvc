@@ -260,5 +260,3 @@
   ]);
 
 }).call(this);
-
-//# sourceMappingURL=AlumnosNewCtrl.js.map

@@ -100,4 +100,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=orderAlumnos.js.map
+//orderAlumnos.js.map

@@ -144,4 +144,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=UserCtrl.js.map
+//UserCtrl.js.map

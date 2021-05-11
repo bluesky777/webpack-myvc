@@ -26,6 +26,8 @@ require('../node_modules/d3/d3')
 require('../node_modules/nvd3/build/nv.d3')
 require('../node_modules/angular-nvd3/dist/angular-nvd3')
 require('../node_modules/moment/dist/moment')
+
+
 import moment from 'moment'; 
 window.moment = moment;
 require('./scripts/calendar')
@@ -216,3 +218,5 @@ require('./scripts/calendar')
     can_edit_candidatos: 'can_edit_candidatos',
     can_edit_unidades_subunidades: 'can_edit_unidades_subunidades'
   });
+
+  require('./scripts/archivos')

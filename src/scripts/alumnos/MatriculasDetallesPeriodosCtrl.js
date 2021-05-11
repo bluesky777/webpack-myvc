@@ -94,4 +94,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=MatriculasDetallesPeriodosCtrl.js.map
+//MatriculasDetallesPeriodosCtrl.js.map

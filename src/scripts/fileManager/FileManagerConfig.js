@@ -34,4 +34,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=FileManagerConfig.js.map
+//FileManagerConfig.js.map

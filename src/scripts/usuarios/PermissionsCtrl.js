@@ -10,4 +10,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PermissionsCtrl.js.map
+//PermissionsCtrl.js.map

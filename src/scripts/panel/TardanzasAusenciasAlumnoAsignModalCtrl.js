@@ -74,4 +74,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=TardanzasAusenciasAlumnoAsignModalCtrl.js.map
+//TardanzasAusenciasAlumnoAsignModalCtrl.js.map

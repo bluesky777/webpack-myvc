@@ -89,4 +89,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ProfesoresNewCtrl.js.map
+//ProfesoresNewCtrl.js.map

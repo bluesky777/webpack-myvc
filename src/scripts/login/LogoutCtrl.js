@@ -14,4 +14,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=LogoutCtrl.js.map
+//LogoutCtrl.js.map

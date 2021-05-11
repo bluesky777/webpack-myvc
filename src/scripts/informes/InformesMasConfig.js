@@ -60,4 +60,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=InformesMasConfig.js.map
+//InformesMasConfig.js.map

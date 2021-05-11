@@ -325,4 +325,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=CopiarCtrl.js.map
+//CopiarCtrl.js.map

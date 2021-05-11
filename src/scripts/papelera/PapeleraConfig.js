@@ -38,4 +38,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PapeleraConfig.js.map
+//PapeleraConfig.js.map

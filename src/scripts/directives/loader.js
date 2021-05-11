@@ -19,4 +19,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=loader.js.map
+//loader.js.map

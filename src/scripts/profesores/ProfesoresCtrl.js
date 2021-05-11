@@ -402,4 +402,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ProfesoresCtrl.js.map
+//ProfesoresCtrl.js.map

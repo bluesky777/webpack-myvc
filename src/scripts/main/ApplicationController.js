@@ -18,4 +18,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=ApplicationController.js.map
+//ApplicationController.js.map

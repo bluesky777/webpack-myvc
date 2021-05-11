@@ -1410,4 +1410,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=InformesConfig.js.map
+//InformesConfig.js.map

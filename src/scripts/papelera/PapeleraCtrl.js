@@ -295,4 +295,4 @@
 
 }).call(this);
 
-//# sourceMappingURL=PapeleraCtrl.js.map
+//PapeleraCtrl.js.map
